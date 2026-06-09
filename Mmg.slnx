@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MmgExplorer/MmgExplorer.csproj" />
+  </Folder>
+  <Project Path="Mmg.AppHost/Mmg.AppHost.csproj" />
+  <Project Path="Mmg.ServiceDefaults/Mmg.ServiceDefaults.csproj" />
+</Solution>
