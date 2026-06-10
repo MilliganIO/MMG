@@ -7,7 +7,7 @@
 <FluentStack Orientation="Orientation.Vertical" VerticalGap="24">
 	<div>
 		<h1 style="margin: 0 0 var(--space-xs); font-size: var(--type-title-1); font-weight: 700;">
-			Welcome back
+			Welcome
 		</h1>
 		<p style="margin: 0; color: var(--color-fg-secondary); font-size: var(--type-subtitle-2);">
 			Here's what's happening across your workspace today.
@@ -17,29 +17,29 @@
 	<FluentGrid Spacing="3">
 		<FluentGridItem xs="12" sm="6" md="3">
 			<FluentCard Style="padding: var(--space-l); border-radius: var(--radius-l);">
-				<div style="color: var(--color-fg-secondary); font-size: var(--type-caption); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">Active Specs</div>
-				<div style="font-size: var(--type-display); font-weight: 700; color: var(--color-brand-primary); line-height: 1;">12</div>
-				<div style="color: var(--color-trend-positive); font-size: var(--type-caption); font-weight: 600;">▲ 3 this week</div>
+				<div style="color: var(--color-fg-secondary); font-size: var(--type-caption); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">Guides</div>
+				<div style="font-size: var(--type-display); font-weight: 700; color: var(--color-brand-primary); line-height: 1;">@(guides?.Count() ?? 0)</div>
+				@* <div style="color: var(--color-trend-positive); font-size: var(--type-caption); font-weight: 600;">▲ 3 this week</div> *@
 			</FluentCard>
 		</FluentGridItem>
 		<FluentGridItem xs="12" sm="6" md="3">
 			<FluentCard Style="padding: var(--space-l); border-radius: var(--radius-l);">
 				<div style="color: var(--color-fg-secondary); font-size: var(--type-caption); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">In Review</div>
-				<div style="font-size: var(--type-display); font-weight: 700; color: var(--color-brand-secondary); line-height: 1;">4</div>
-				<div style="color: var(--color-fg-muted); font-size: var(--type-caption); font-weight: 600;">awaiting approval</div>
+				<div style="font-size: var(--type-display); font-weight: 700; color: var(--color-brand-secondary); line-height: 1;">0</div>
+				@* <div style="color: var(--color-fg-muted); font-size: var(--type-caption); font-weight: 600;">awaiting approval</div> *@
 			</FluentCard>
 		</FluentGridItem>
 		<FluentGridItem xs="12" sm="6" md="3">
 			<FluentCard Style="padding: var(--space-l); border-radius: var(--radius-l);">
-				<div style="color: var(--color-fg-secondary); font-size: var(--type-caption); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">Shipped</div>
-				<div style="font-size: var(--type-display); font-weight: 700; color: var(--color-brand-accent); line-height: 1;">28</div>
-				<div style="color: var(--color-trend-positive); font-size: var(--type-caption); font-weight: 600;">▲ 12% MoM</div>
+				<div style="color: var(--color-fg-secondary); font-size: var(--type-caption); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">Updated</div>
+				<div style="font-size: var(--type-display); font-weight: 700; color: var(--color-brand-accent); line-height: 1;">0</div>
+				@* <div style="color: var(--color-trend-positive); font-size: var(--type-caption); font-weight: 600;">▲ 12% MoM</div> *@
 			</FluentCard>
 		</FluentGridItem>
 		<FluentGridItem xs="12" sm="6" md="3">
 			<FluentCard Style="padding: var(--space-l); border-radius: var(--radius-l);">
 				<div style="color: var(--color-fg-secondary); font-size: var(--type-caption); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">Team</div>
-				<div style="font-size: var(--type-display); font-weight: 700; color: var(--color-fg-default); line-height: 1;">7</div>
+				<div style="font-size: var(--type-display); font-weight: 700; color: var(--color-fg-default); line-height: 1;">3</div>
 				<div style="color: var(--color-fg-muted); font-size: var(--type-caption); font-weight: 600;">contributors online</div>
 			</FluentCard>
 		</FluentGridItem>
@@ -58,16 +58,16 @@
 	List<Guide>? guides;
 	string? ErrorMessage;
 
-	protected override async Task OnAfterRenderAsync(bool firstRender)
+	protected override async Task OnInitializedAsync()
 	{
 		guides = null;
 		ErrorMessage = null;
 		var response = await client.GetAllAsync();
-
+		int guideTotal;
 		if (response.StatusCode == 200)
 		{
 			guides = response.Result;
+			guideTotal = guides.Count();
 		}
-
 	}
 }
