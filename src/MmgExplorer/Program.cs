@@ -1,4 +1,5 @@
 using Microsoft.FluentUI.AspNetCore.Components;
+using MmgExplorer;
 using MmgExplorer.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddFluentUIComponents();
+builder.Services.AddScoped<IMmgatClient, MmgatClient>();
 
 var app = builder.Build();
 
