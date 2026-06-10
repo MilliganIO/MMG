@@ -1,3 +1,5 @@
+@inject IJSRuntime JS
+
 <FluentHeader Class="topbar">
     <FluentButton Appearance="ButtonAppearance.Default"
                   IconStart="@(new Icons.Regular.Size24.Navigation())"
@@ -28,9 +30,10 @@
 
     <div class="topbar-actions">
         <FluentButton Appearance="ButtonAppearance.Default"
-                      IconStart="@(new Icons.Regular.Size20.WeatherMoon())"
+                      IconStart="@ThemeIcon"
+                      OnClick="ToggleTheme"
                       Class="topbar-control-ghost"
-                      Title="Toggle theme" />
+                      Title="@ThemeTitle" />
         <FluentButton Appearance="ButtonAppearance.Default"
                       IconStart="@(new Icons.Regular.Size20.QuestionCircle())"
                       Class="topbar-control-ghost"
@@ -43,8 +46,8 @@
             <span class="topbar-bell-dot"></span>
         </div>
         <div class="topbar-divider"></div>
-        <button class="topbar-persona" title="Joshua Milligan" aria-label="Account">
-            <span class="topbar-persona-avatar">JM</span>
+        <button class="topbar-persona" title="Persona Here" aria-label="Account">
+            <span class="topbar-persona-avatar">PH</span>
             <span class="topbar-persona-presence" aria-hidden="true"></span>
         </button>
     </div>
@@ -52,4 +55,41 @@
 
 @code {
     [Parameter] public EventCallback OnMenuToggle { get; set; }
+
+    private bool _isDark;
+
+    private Icon ThemeIcon => _isDark
+        ? new Icons.Regular.Size20.WeatherSunny()
+        : new Icons.Regular.Size20.WeatherMoon();
+
+    private string ThemeTitle => _isDark ? "Switch to light mode" : "Switch to dark mode";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                var theme = await JS.InvokeAsync<string>("themeToggle.current");
+                _isDark = theme == "dark";
+                StateHasChanged();
+            }
+            catch { /* themeToggle script not ready yet — fine, it'll sync on first click */ }
+        }
+    }
+
+    private async Task ToggleTheme()
+    {
+        try
+        {
+            var newTheme = await JS.InvokeAsync<string>("themeToggle.toggle");
+            _isDark = newTheme == "dark";
+        }
+        catch
+        {
+            // Fallback: flip our local state and try set
+            _isDark = !_isDark;
+            await JS.InvokeVoidAsync("themeToggle.set", _isDark ? "dark" : "light");
+        }
+    }
 }

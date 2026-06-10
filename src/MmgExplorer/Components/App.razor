@@ -13,6 +13,16 @@
 	<link rel="stylesheet" href="@Assets["MmgExplorer.styles.css"]" />
 	<ImportMap />
 	<HeadOutlet />
+	<script>
+		// Apply theme before render to avoid flash of incorrect theme
+		(function () {
+			try {
+				const saved = localStorage.getItem('theme');
+				const dark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+				document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+			} catch { document.documentElement.setAttribute('data-theme', 'light'); }
+		})();
+	</script>
 </head>
 
 <body use-reboot>
@@ -31,6 +41,19 @@
 		scrollToSegment(domId) {
 		const el = document.getElementById(domId);
 		if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
+		};
+		window.themeToggle = {
+		current() { return document.documentElement.getAttribute('data-theme') || 'light'; },
+		set(theme) {
+		document.documentElement.setAttribute('data-theme', theme);
+		try { localStorage.setItem('theme', theme); } catch { }
+		},
+		toggle() {
+		const next = (document.documentElement.getAttribute('data-theme') || 'light') === 'dark' ? 'light' : 'dark';
+		document.documentElement.setAttribute('data-theme', next);
+		try { localStorage.setItem('theme', next); } catch { }
+		return next;
 		}
 		};
 	</script>
