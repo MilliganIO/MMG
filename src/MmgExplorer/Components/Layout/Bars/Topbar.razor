@@ -13,16 +13,15 @@
         </div>
         <div class="topbar-brand-text">
             <span class="topbar-brand-name">MMG Explorer</span>
-            <span class="topbar-brand-tag">Claude Learning</span>
+            <span class="topbar-brand-tag">&nbsp;</span>
         </div>
     </div>
 
     <FluentSpacer />
 
     <div class="topbar-search">
-        <FluentSearch Placeholder="Search projects, specs, docs..."
-                      Immediate="true"
-                      Class="topbar-search-field" />
+        <FluentTextField Placeholder="Search projects, specs, docs..."
+                         Class="topbar-search-field" />
     </div>
 
     <FluentSpacer />
@@ -44,12 +43,10 @@
             <span class="topbar-bell-dot"></span>
         </div>
         <div class="topbar-divider"></div>
-        <FluentPersona Name="Joshua Milligan"
-                       Initials="JM"
-                       Status="PresenceStatus.Available"
-                       StatusSize="PresenceBadgeSize.ExtraSmall"
-                       ImageSize="36px"
-                       Class="topbar-persona" />
+        <button class="topbar-persona" title="Joshua Milligan" aria-label="Account">
+            <span class="topbar-persona-avatar">JM</span>
+            <span class="topbar-persona-presence" aria-hidden="true"></span>
+        </button>
     </div>
 </FluentHeader>
 
