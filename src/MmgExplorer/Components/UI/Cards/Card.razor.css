@@ -1,0 +1,192 @@
+﻿.portal-card {
+    border-radius: var(--radius-m);
+    background: var(--color-bg-surface);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.15s ease;
+}
+
+/* Fill layout: card fills container, content scrolls internally (used with TableLayout) */
+.portal-card-fill {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+    .portal-card-fill .portal-card-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .portal-card-fill .portal-card-content {
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .portal-card-fill ::deep .fluent-datatable {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .portal-card-fill ::deep .fluent-datatable-body {
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+.portal-card-body {
+    padding: var(--space-l);
+}
+
+/* Table layout: title/subtitle (left) + toolbar (right) in one header row.
+   Uses container queries so the layout adapts to the card's *own* rendered
+   width — important when a sibling panel squeezes the card narrow without
+   shrinking the viewport. */
+.portal-card-body-table {
+    position: relative;
+    container-type: inline-size;
+}
+
+    /* Title row matches the kebab trigger's 32px height and centers text
+   vertically — so the title baseline lines up with the toolbar icon
+   instead of sitting above it. */
+    .portal-card-body-table .portal-card-title {
+        min-height: 32px;
+        display: flex;
+        align-items: center;
+        padding-inline-end: clamp(4rem, 8vw, 6rem);
+    }
+
+    /* Subtitle sits BELOW the title row, clear of the toolbar — no need to
+   reserve right-padding for it. */
+    .portal-card-body-table .portal-card-subtitle {
+        padding-inline-end: 0;
+    }
+
+    .portal-card-body-table ::deep .table-toolbar {
+        position: absolute;
+        inset-block-start: var(--space-l);
+        inset-inline-end: var(--space-l);
+        padding: 0;
+        margin-bottom: 0;
+        justify-content: flex-end;
+    }
+
+    .portal-card-body-table ::deep .table-toolbar-sort {
+        display: none;
+    }
+
+    .portal-card-body-table ::deep .fluent-datatable-body {
+        margin-top: var(--space-m);
+    }
+
+/* ─── Container-query breakpoints (largest → smallest) ─── */
+/* Toolbar stays absolute at all widths — the kebab is ~32px so it always
+   fits on the title row (the title's padding-inline-end reserves room). */
+
+/* < 500px: paginator wraps + shrinks (default has margin-inline-start: auto
+   that pushes nav right, which doesn't fit cleanly when narrow). */
+@container (max-width: 500px) {
+    .portal-card-body-table ::deep .fluent-datatable-paginator .paginator {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-xs);
+        font-size: var(--type-caption);
+        margin-top: var(--space-xs);
+    }
+
+    .portal-card-body-table ::deep .fluent-datatable-paginator .pagination-text {
+        margin: 0;
+    }
+
+    .portal-card-body-table ::deep .fluent-datatable-paginator .paginator-nav {
+        margin-inline-start: 0;
+        gap: var(--space-2xs);
+    }
+}
+
+/* < 400px: card body is squished (e.g., sitting next to a Maximized panel).
+   Compact the title/subtitle, drop the "Showing X–Y" paginator summary,
+   and drop the "Actions" header — the View button is self-explanatory. */
+@container (max-width: 400px) {
+    .portal-card-body-table .portal-card-subtitle {
+        display: none;
+    }
+
+    .portal-card-body-table .portal-card-title {
+        font-size: var(--type-caption);
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .portal-card-body-table ::deep .fluent-datatable-body {
+        margin-top: var(--space-s);
+    }
+
+    .portal-card-body-table ::deep .fluent-datatable-paginator .paginator > .pagination-text {
+        display: none;
+    }
+
+    .portal-card-body-table ::deep th.action-column {
+        color: transparent;
+        font-size: 0;
+    }
+}
+
+/* < 220px: extreme rail — drop column headers entirely, hide paginator,
+   and flatten the View button into a full-width list-item click target.
+   At this width the row-hover highlight (RowHoverHighlight) is the
+   primary click affordance. */
+@container (max-width: 220px) {
+    .portal-card-body-table ::deep .fluent-datatable-grid thead {
+        display: none;
+    }
+
+    .portal-card-body-table ::deep .fluent-datatable-grid td {
+        padding: var(--space-xs) var(--space-s);
+    }
+
+    .portal-card-body-table ::deep .table-btn {
+        width: 100%;
+        justify-content: flex-start;
+        border-color: transparent;
+        background: transparent;
+    }
+
+        .portal-card-body-table ::deep .table-btn:hover {
+            background: transparent;
+            border-color: transparent;
+        }
+
+    .portal-card-body-table ::deep .fluent-datatable-paginator {
+        display: none;
+    }
+}
+
+.portal-card-title {
+    margin: 0;
+    font-size: var(--type-subtitle-2);
+    color: var(--color-fg-default);
+}
+
+.portal-card-subtitle {
+    margin-top: var(--space-2xs);
+    color: var(--color-fg-secondary);
+    font-size: var(--type-caption);
+}
+
+.portal-card-content {
+    margin-top: var(--space-m);
+}

@@ -1,0 +1,32 @@
+﻿﻿<div class="widget-card dropdown-container">
+	<div class="widget-card-header">
+		<FluentStack HorizontalAlignment="HorizontalAlignment.SpaceBetween" VerticalAlignment="VerticalAlignment.SpaceBetween" Orientation="Orientation.Horizontal">
+			<div>
+				<h3 class="widget-card-title">@Title</h3>
+				@if (!string.IsNullOrEmpty(Subtitle))
+				{
+					<p class="widget-card-subtitle">@Subtitle</p>
+				}
+			</div>
+			@if (OptionsMenu is not null)
+			{
+				<div class="widget-card-actions">
+					@OptionsMenu
+				</div>
+			}
+		</FluentStack>
+	</div>
+	<div class="widget-card-body">
+		@ChildContent
+	</div>
+	@if (Footer != null)
+	{
+		<div class="widget-card-footer">
+			@Footer
+		</div>
+	}
+</div>
+
+@code {
+
+}

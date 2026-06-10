@@ -1,0 +1,73 @@
+﻿@using FluentIcons = Microsoft.FluentUI.AspNetCore.Components.Icons;
+@using MmgExplorer.Components.UI.Tables.Models;
+
+<div class="@ToolbarClass">
+    <div class="@ToolbarActionsClass" aria-label="Table actions">
+        @if (HasSelectableRows)
+        {
+            <FluentButton Appearance="ButtonAppearance.Default"
+                          Class="@selectionActionClass"
+                          Disabled="@(SelectedCount == 0)"
+                          IconStart="@selectionIcon"
+                          @onclick="@OnSelectionClick">
+                @SelectionButtonText @(SelectedCount > 0 ? $"({SelectedCount})" : "")
+            </FluentButton>
+        }
+        @* Inline mode (default): one button per action. Switches to kebab below ~500px container width via TableToolbar.razor.css. *@
+        <div class="table-toolbar-inline">
+            @if (ExtraToolbarContent != null)
+            {
+                @ExtraToolbarContent
+            }
+            @if (CanRefresh)
+            {
+                <FluentButton Appearance="ButtonAppearance.Outline" @onclick="HandleRefresh" aria-label="Refresh">
+                    <FluentIcon Value="@(new Icons.Regular.Size16.ArrowSync())" />
+                </FluentButton>
+            }
+            @if (CanExport)
+            {
+                <FluentButton Appearance="ButtonAppearance.Outline" @onclick="HandleExport" aria-label="Export">
+                    <FluentIcon Value="@(new Icons.Regular.Size16.ArrowDownload())" slot="start" />
+                    @if (ShowToolbarLabels)
+                    {
+                        <span>Export</span>
+                    }
+                </FluentButton>
+            }
+            @if (CanSelectColumns)
+            {
+                <FluentButton Appearance="ButtonAppearance.Outline" @onclick="HandleToggleColumns" aria-label="Select columns">
+                    <FluentIcon Value="@(Icon.FromImageUrl("/images/icons/ico-columns.svg"))" slot="start" />
+                    @if (ShowToolbarLabels)
+                    {
+                        <span>Columns</span>
+                    }
+                </FluentButton>
+            }
+            @if (CanFilter)
+            {
+                <FluentButton Appearance="ButtonAppearance.Outline" @onclick="HandleToggleFilter" aria-label="Filter">
+                    <FluentIcon Value="@(Icon.FromImageUrl("/images/icons/ico-filters.svg"))" slot="start" />
+                    @if (ShowToolbarLabels)
+                    {
+                        <span>Filter</span>
+                    }
+                </FluentButton>
+            }
+        </div>
+
+    </div>
+</div>
+
+@code {
+    private Icon selectionIcon => SelectionActionType switch
+    {
+        TableToolbarSelectionType.Deletion => new FluentIcons.Regular.Size20.Delete(),
+        TableToolbarSelectionType.Success => new FluentIcons.Regular.Size20.Checkmark(),
+        TableToolbarSelectionType.Info => new FluentIcons.Regular.Size20.Info(),
+        TableToolbarSelectionType.Warning => new FluentIcons.Regular.Size20.Warning(),
+        _ => new FluentIcons.Regular.Size20.CheckboxChecked()
+    };
+
+}

@@ -37,13 +37,25 @@ public class MmgatClient : IMmgatClient
         {
             return new ApiMultipleResponse(
                 StatusCode: 500,
-                Result: new List<Guide>(),
+                Result: default!,
                 Message: ex.Message);
         }
     }
 
-    public Task<ApiSingleResponse> GetAsync(string id)
+    public async Task<ApiSingleResponse> GetAsync(string id)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.GetAsync($"{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return new ApiSingleResponse(
+                StatusCode: (int)response.StatusCode,
+                Result: default!,
+                Message: $"Request failed: {response.ReasonPhrase}");
+        }
+        var envelope = await response.Content.ReadFromJsonAsync<ApiSingleResponse>();
+        return envelope ?? new ApiSingleResponse(
+            StatusCode: 500,
+            Result: default!,
+            Message: "Empty response body");
     }
 }

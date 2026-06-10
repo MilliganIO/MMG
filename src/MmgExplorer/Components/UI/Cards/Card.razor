@@ -1,0 +1,28 @@
+﻿<div class="card portal-card @CardClass @Class @(TableLayout ? "portal-card-fill" : null)">
+    <div class="card-body portal-card-body @(TableLayout ? "portal-card-body-table" : null)">
+        @if (!string.IsNullOrEmpty(Title))
+        {
+            <h5 class="card-title portal-card-title">
+                @Title
+            </h5>
+        }
+
+        @if (!string.IsNullOrEmpty(SubTitle))
+        {
+            <p class="card-subtitle portal-card-subtitle">
+                @SubTitle
+            </p>
+        }
+
+        @if (ChildContent != null)
+        {
+            <div class="portal-card-content">
+                @ChildContent
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+
+}
