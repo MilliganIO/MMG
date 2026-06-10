@@ -1,11 +1,29 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
+@using MmgExplorer.Components.Layout.Bars
 
-@Body
+<div class="app-layout">
+    <Topbar OnMenuToggle="ToggleSidebar" />
+    <div class="app-body">
+        <Sidebar MobileOpen="_mobileOpen" OnScrimClick="CloseSidebar" />
+        <main class="app-main">
+            <div class="app-content">
+                @Body
+            </div>
+        </main>
+    </div>
+</div>
 
 <div id="blazor-error-ui" data-nosnippet>
-	An unhandled error has occurred.
-	<a href="." class="reload">Reload</a>
-	<span class="dismiss">🗙</span>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
 </div>
 
 <FluentProviders />
+
+@code {
+    private bool _mobileOpen;
+
+    private void ToggleSidebar() => _mobileOpen = !_mobileOpen;
+    private void CloseSidebar() => _mobileOpen = false;
+}

@@ -1,0 +1,58 @@
+<FluentHeader Class="topbar">
+    <FluentButton Appearance="ButtonAppearance.Default"
+                  IconStart="@(new Icons.Regular.Size24.Navigation())"
+                  OnClick="OnMenuToggle"
+                  Class="topbar-menu-btn topbar-control-ghost"
+                  Title="Toggle navigation" />
+
+    <div class="topbar-brand">
+        <div class="topbar-brand-mark">
+            <FluentIcon Value="@(new Icons.Filled.Size24.Sparkle())"
+                        Color="Color.Custom"
+                        CustomColor="var(--global-color-gold-70)" />
+        </div>
+        <div class="topbar-brand-text">
+            <span class="topbar-brand-name">MMG Explorer</span>
+            <span class="topbar-brand-tag">Claude Learning</span>
+        </div>
+    </div>
+
+    <FluentSpacer />
+
+    <div class="topbar-search">
+        <FluentSearch Placeholder="Search projects, specs, docs..."
+                      Immediate="true"
+                      Class="topbar-search-field" />
+    </div>
+
+    <FluentSpacer />
+
+    <div class="topbar-actions">
+        <FluentButton Appearance="ButtonAppearance.Default"
+                      IconStart="@(new Icons.Regular.Size20.WeatherMoon())"
+                      Class="topbar-control-ghost"
+                      Title="Toggle theme" />
+        <FluentButton Appearance="ButtonAppearance.Default"
+                      IconStart="@(new Icons.Regular.Size20.QuestionCircle())"
+                      Class="topbar-control-ghost"
+                      Title="Help" />
+        <div class="topbar-bell">
+            <FluentButton Appearance="ButtonAppearance.Default"
+                          IconStart="@(new Icons.Regular.Size20.Alert())"
+                          Class="topbar-control-ghost"
+                          Title="Notifications" />
+            <span class="topbar-bell-dot"></span>
+        </div>
+        <div class="topbar-divider"></div>
+        <FluentPersona Name="Joshua Milligan"
+                       Initials="JM"
+                       Status="PresenceStatus.Available"
+                       StatusSize="PresenceBadgeSize.ExtraSmall"
+                       ImageSize="36px"
+                       Class="topbar-persona" />
+    </div>
+</FluentHeader>
+
+@code {
+    [Parameter] public EventCallback OnMenuToggle { get; set; }
+}

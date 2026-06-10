@@ -1,0 +1,173 @@
+/* ============================================================
+   Topbar — modern brand header with gradient + accent strip
+   ============================================================ */
+
+.topbar {
+    background: linear-gradient(135deg,
+        var(--global-color-navy-30) 0%,
+        var(--global-color-navy-50) 55%,
+        var(--global-color-navy-15) 100%);
+    color: var(--color-fg-onbrand);
+    height: var(--topbar-height);
+    min-height: var(--topbar-height);
+    padding: 0 var(--space-l);
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    box-shadow: var(--shadow-raised);
+    position: relative;
+    z-index: 10;
+    --neutral-foreground-rest: var(--color-fg-onbrand);
+    --neutral-foreground-hover: var(--color-fg-onbrand);
+    --neutral-foreground-active: var(--color-fg-onbrand);
+}
+
+/* Accent gradient strip under the topbar */
+.topbar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        var(--global-color-emerald-50) 20%,
+        var(--global-color-gold-50) 50%,
+        var(--global-color-emerald-50) 80%,
+        transparent 100%);
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+/* ---------- Brand ---------- */
+.topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    padding-inline: var(--space-xs);
+}
+
+.topbar-brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-m);
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.18),
+        rgba(255, 255, 255, 0.04));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+                0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.topbar-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.topbar-brand-name {
+    font-size: var(--type-subtitle-2);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--color-fg-onbrand);
+}
+
+.topbar-brand-tag {
+    font-size: var(--type-overline);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--global-color-navy-90);
+}
+
+/* ---------- Search ---------- */
+.topbar-search {
+    flex: 1 1 0;
+    max-width: 460px;
+    min-width: 0;
+}
+
+.topbar-search ::deep .topbar-search-field,
+.topbar-search ::deep fluent-search {
+    width: 100%;
+    --neutral-fill-input-rest: rgba(255, 255, 255, 0.10);
+    --neutral-fill-input-hover: rgba(255, 255, 255, 0.15);
+    --neutral-fill-input-active: rgba(255, 255, 255, 0.18);
+    --neutral-fill-input-focus: rgba(255, 255, 255, 0.18);
+    --neutral-stroke-input-rest: rgba(255, 255, 255, 0.18);
+    --neutral-stroke-input-hover: rgba(255, 255, 255, 0.35);
+    --neutral-foreground-rest: var(--color-fg-onbrand);
+}
+
+/* ---------- Actions ---------- */
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.topbar-bell {
+    position: relative;
+}
+
+.topbar-bell-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-round);
+    background: var(--global-color-emerald-55);
+    box-shadow: 0 0 0 2px var(--global-color-navy-30);
+    pointer-events: none;
+}
+
+.topbar-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.18);
+    margin-inline: var(--space-xs);
+}
+
+.topbar-persona {
+    --neutral-foreground-rest: var(--color-fg-onbrand);
+    color: var(--color-fg-onbrand);
+}
+
+/* ---------- Menu button (mobile only) ---------- */
+.topbar-menu-btn {
+    display: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+    .topbar-search {
+        max-width: 280px;
+    }
+    .topbar-brand-tag {
+        display: none;
+    }
+}
+
+@media (max-width: 720px) {
+    .topbar {
+        padding: 0 var(--space-s);
+        gap: var(--space-s);
+    }
+    .topbar-menu-btn {
+        display: inline-flex;
+    }
+    .topbar-search {
+        display: none;
+    }
+    .topbar-actions {
+        gap: 0;
+    }
+    .topbar-divider,
+    .topbar-brand-text {
+        display: none;
+    }
+}

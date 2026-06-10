@@ -1,0 +1,79 @@
+<aside class="sidebar @(Collapsed ? "collapsed" : null) @(MobileOpen ? "mobile-open" : null)">
+    <div class="sidebar-scroll">
+        <div class="sidebar-section-label">Workspace</div>
+        <FluentNavMenu Width="220" Collapsible="false" Class="sidebar-nav-menu">
+            <FluentNavLink Href="/"
+                           Match="NavLinkMatch.All"
+                           Icon="@(new Icons.Regular.Size20.Home())"
+                           IconColor="Color.Accent">Home</FluentNavLink>
+            <FluentNavLink Href="/explore"
+                           Icon="@(new Icons.Regular.Size20.Globe())"
+                           IconColor="Color.Accent">Explore</FluentNavLink>
+            <FluentNavLink Href="/dashboard"
+                           Icon="@(new Icons.Regular.Size20.DataBarVertical())"
+                           IconColor="Color.Accent">Dashboard</FluentNavLink>
+            <FluentNavLink Href="/projects"
+                           Icon="@(new Icons.Regular.Size20.Briefcase())"
+                           IconColor="Color.Accent">Projects</FluentNavLink>
+        </FluentNavMenu>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section-label">Library</div>
+        <FluentNavMenu Width="220" Collapsible="false" Class="sidebar-nav-menu">
+            <FluentNavGroup Icon="@(new Icons.Regular.Size20.Document())"
+                            Title="Documents">
+                <FluentNavLink Href="/docs/recent">Recent</FluentNavLink>
+                <FluentNavLink Href="/docs/shared">Shared with me</FluentNavLink>
+                <FluentNavLink Href="/docs/archive">Archive</FluentNavLink>
+            </FluentNavGroup>
+            <FluentNavLink Href="/specs"
+                           Icon="@(new Icons.Regular.Size20.ClipboardTextLtr())"
+                           IconColor="Color.Accent">Specs</FluentNavLink>
+            <FluentNavLink Href="/team"
+                           Icon="@(new Icons.Regular.Size20.People())"
+                           IconColor="Color.Accent">Team</FluentNavLink>
+        </FluentNavMenu>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section-label">System</div>
+        <FluentNavMenu Width="220" Collapsible="false" Class="sidebar-nav-menu">
+            <FluentNavLink Href="/settings"
+                           Icon="@(new Icons.Regular.Size20.Settings())"
+                           IconColor="Color.Accent">Settings</FluentNavLink>
+            <FluentNavLink Href="/feedback"
+                           Icon="@(new Icons.Regular.Size20.ChatHelp())"
+                           IconColor="Color.Accent">Feedback</FluentNavLink>
+        </FluentNavMenu>
+    </div>
+
+    <div class="sidebar-footer">
+        <FluentCard Class="sidebar-upgrade-card">
+            <div class="sidebar-upgrade-title">
+                <FluentIcon Value="@(new Icons.Filled.Size20.Rocket())"
+                            Color="Color.Custom"
+                            CustomColor="var(--global-color-amber-50)" />
+                <span>Tips & tricks</span>
+            </div>
+            <p class="sidebar-upgrade-body">
+                Explore Claude's spec-driven workflow to ship faster.
+            </p>
+            <FluentButton Appearance="ButtonAppearance.Primary"
+                          IconStart="@(new Icons.Regular.Size16.ArrowRight())"
+                          IconPosition="IconPosition.End"
+                          Class="sidebar-upgrade-cta">
+                Learn more
+            </FluentButton>
+        </FluentCard>
+    </div>
+</aside>
+
+@if (MobileOpen)
+{
+    <div class="sidebar-scrim" @onclick="OnScrimClick"></div>
+}
+
+@code {
+    [Parameter] public bool Collapsed { get; set; }
+    [Parameter] public bool MobileOpen { get; set; }
+    [Parameter] public EventCallback OnScrimClick { get; set; }
+}

@@ -1,3 +1,56 @@
+/* ============================================================
+   MainLayout — full-viewport shell with topbar + sidebar + body
+   ============================================================ */
+
+.app-layout {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--color-bg-canvas);
+}
+
+.app-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+}
+
+.app-main {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
+    overflow: auto;
+    background:
+        radial-gradient(1200px 600px at -10% -20%,
+            rgba(54, 127, 106, 0.06) 0%,
+            transparent 60%),
+        radial-gradient(1000px 500px at 110% 110%,
+            rgba(219, 155, 43, 0.06) 0%,
+            transparent 55%),
+        var(--color-bg-canvas);
+}
+
+.app-content {
+    padding: var(--space-2xl) var(--space-3xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 960px) {
+    .app-content {
+        padding: var(--space-l);
+    }
+}
+
+/* ---------- Blazor error UI (preserved) ---------- */
 #blazor-error-ui {
     color-scheme: light only;
     background: lightyellow;
@@ -12,9 +65,9 @@
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
