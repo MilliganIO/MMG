@@ -9,6 +9,10 @@
     <ProjectReference Include="..\..\Mmg.ServiceDefaults\Mmg.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\Layout\Bars\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>

@@ -1,0 +1,413 @@
+/* ============================================================
+   Design Tokens (single source of truth)
+
+   Usage:
+   - In component styles, use semantic tokens only
+     (for example: --color-fg-default, --space-m, --radius-s).
+   - Do not use palette/hex values directly in component CSS.
+   - If a needed semantic token does not exist, add it here first.
+
+   Naming:
+   - --global-color-* = raw palette values (defined only in this file)
+   - --color-*        = semantic aliases used by components
+   - --space-*        = spacing scale
+   - --type-*         = typography scale
+   - --radius-*       = corner radius scale
+   - --shadow-*       = elevation scale
+
+   Theming:
+   - :root contains light theme defaults.
+   - [data-theme="dark"] remaps semantic tokens for dark mode.
+   - Components should not branch on theme; they should consume semantic tokens.
+
+   Legacy note:
+   - Older SCSS exists in wwwroot/styles for legacy pages.
+   - Active dashboard styles should continue to use tokenized CSS in wwwroot/css.
+   - See docs/agents-style.md for contributor guidance.
+   ============================================================ */
+
+:root {
+    /* ---------- Raw Palette (Global Only) ---------- */
+    /* Navy */
+    --global-color-navy-5: #04090c;
+    --global-color-navy-10: #071218;
+    --global-color-navy-15: #0b1b24;
+    --global-color-navy-20: #0e2430;
+    --global-color-navy-30: #122d3c;
+    --global-color-navy-50: #0c364c;
+    --global-color-navy-60: #124661;
+    --global-color-navy-70: #416b81;
+    --global-color-navy-80: #7190a0;
+    --global-color-navy-90: #a0b5c0;
+    --global-color-navy-95: #d0dadf;
+    /* Emerald */
+    --global-color-emerald-5: #081411;
+    --global-color-emerald-15: #193b32;
+    --global-color-emerald-20: #224f42;
+    --global-color-emerald-50: #367f6a;
+    --global-color-emerald-60: #429b81;
+    --global-color-emerald-70: #68af9a;
+    --global-color-emerald-80: #8ec3b3;
+    --global-color-emerald-90: #b3d7cd;
+    --global-color-emerald-95: #d9ebe6;
+    /* Amber / Gold */
+    --global-color-amber-5: #d09329;
+    --global-color-amber-15: #ba8425;
+    --global-color-amber-20: #af7c22;
+    --global-color-amber-50: #db9b2b;
+    --global-color-amber-60: #e1ab4d;
+    --global-color-amber-70: #e7bc71;
+    --global-color-amber-80: #edcd94;
+    --global-color-amber-90: #f3ddb8;
+    --global-color-amber-95: #f9eedb;
+    --global-color-gold-50: #f0ce1b;
+    --global-color-gold-70: #f5de66;
+    --global-color-gold-95: #fcf7d9;
+    /* Accent families */
+    --global-color-crimson-50: #c62828;
+    --global-color-crimson-95: #fdecea;
+    --global-color-rose-50: #d81b60;
+    --global-color-azure-30: #117899;
+    --global-color-azure-50: #1594bc;
+    --global-color-azure-60: #31a4c8;
+    --global-color-azure-70: #4cb4d3;
+    --global-color-azure-80: #89cfe4;
+    --global-color-azure-95: #d1eff9;
+    --global-color-teal-50: #00acc1;
+    --global-color-teal-95: #ccf2f6;
+    --global-color-slate-50: #acaeb5;
+    --global-color-slate-80: #d7d9e0;
+    --global-color-slate-90: #e6e8ed;
+    --global-color-slate-95: #f0f1f4;
+    --global-color-white: #ffffff;
+    /* Neutral semantic palette */
+    --global-color-neutral-100: #1a1a1a;
+    --global-color-neutral-70: #616161;
+    --global-color-neutral-60: #808080;
+    --global-color-neutral-50: #9e9e9e;
+    --global-color-neutral-30: #bdbdbd;
+    --global-color-neutral-20: #e0e0e0;
+    --global-color-neutral-10: #f2f4f6;
+    --global-color-neutral-5: #fbfbfb;
+    --global-color-canvas-light: #fbf9f6;
+    /* Banner foreground */
+    --global-color-gold-30: #8b6914;
+    --global-color-gold-20: #7a5c00;
+    /* Status: success shades (tuned to complement navy brand) */
+    --global-color-emerald-55: #2e9e6e;
+    --global-color-emerald-10: #145239;
+    --global-color-emerald-98: #e6f5ee;
+    --global-color-emerald-65: #4db885;
+    --global-color-emerald-12: #1a3329;
+    --global-color-emerald-85: #9ad6b8;
+    /* Status: danger shades (tuned to complement navy brand) */
+    --global-color-crimson-60: #c43a3a;
+    --global-color-crimson-10: #7a2020;
+    --global-color-crimson-98: #fceaea;
+    --global-color-crimson-65: #d95555;
+    --global-color-crimson-12: #3a1e1e;
+    --global-color-crimson-80: #e8a0a0;
+    /* Status: info shades */
+    --global-color-azure-20: #0a4f6b;
+    --global-color-azure-15: #0d2d3d;
+    /* Charts */
+    --global-color-orange-60: #e85d3a;
+    --global-color-orange-70: #ff7043;
+    /* Dark-only banner surfaces */
+    --global-color-banner-dark: #2a2418;
+    --global-color-banner-dark-hover: #3a3428;
+    /* Overlay alphas */
+    --global-color-black-alpha-4: rgb(0 0 0 / 4%);
+    --global-color-black-alpha-8: rgb(0 0 0 / 8%);
+    --global-color-white-alpha-6: rgba(255, 255, 255, 0.06);
+    --global-color-white-alpha-8: rgba(255, 255, 255, 0.08);
+    /* ---------- Brand ---------- */
+    --color-brand-primary: var(--global-color-navy-50);
+    --color-brand-primary-hover: var(--global-color-navy-30);
+    --color-brand-primary-active: var(--global-color-navy-15);
+    --color-brand-secondary: var(--global-color-emerald-50);
+    --color-brand-accent: var(--global-color-amber-50);
+    /* ---------- Backgrounds ---------- */
+    --color-bg-canvas: var(--global-color-canvas-light);
+    --color-bg-surface: var(--global-color-white);
+    --color-bg-surface-secondary: var(--global-color-slate-95);
+    --color-bg-sidebar: var(--color-bg-surface);
+    --color-bg-sidebar-hover: var(--color-bg-surface-secondary);
+    --color-bg-topbar: var(--global-color-white);
+    --color-bg-banner: var(--global-color-navy-95);
+    --color-bg-banner-hover: var(--global-color-navy-90);
+    --color-bg-layer-1: var(--color-bg-surface);
+    --color-bg-layer-2: var(--color-bg-surface-secondary);
+    --color-bg-layer-3: var(--global-color-neutral-10);
+    --color-bg-layer-4: var(--global-color-neutral-20);
+    --color-bg-layer-floating: var(--color-bg-layer-2);
+    --color-bg-control-rest: var(--color-bg-surface);
+    --color-bg-control-hover: var(--global-color-neutral-5);
+    --color-bg-control-active: var(--global-color-neutral-10);
+    --color-bg-control-ghost-rest: transparent;
+    --color-bg-control-ghost-hover: var(--color-bg-control-hover);
+    --color-bg-control-ghost-active: var(--color-bg-control-active);
+    /* ---------- Foregrounds ---------- */
+    --color-fg-default: var(--global-color-neutral-100);
+    --color-fg-secondary: var(--global-color-neutral-70);
+    --color-fg-muted: var(--global-color-neutral-50);
+    --color-fg-onbrand: var(--global-color-white);
+    --color-fg-onbrand-secondary: var(--global-color-navy-90);
+    --color-fg-banner: var(--global-color-gold-30);
+    --color-fg-link: var(--global-color-navy-50);
+    --color-fg-link-hover: var(--global-color-navy-30);
+    --color-fg-control-rest: var(--color-fg-default);
+    --color-fg-control-hover: var(--color-fg-default);
+    /* ---------- Borders ---------- */
+    --color-border-default: var(--global-color-neutral-20);
+    --color-border-strong: var(--global-color-neutral-30);
+    --color-border-brand: var(--global-color-navy-15);
+    --color-border-subtle: var(--global-color-slate-95);
+    --color-border-sidebar: var(--color-border-default);
+    /* ---------- Status ---------- */
+    --color-status-success: var(--global-color-emerald-55);
+    --color-status-success-bg: var(--global-color-emerald-98);
+    --color-status-success-fg: var(--global-color-emerald-10);
+    --color-status-warning: var(--global-color-amber-50);
+    --color-status-warning-bg: var(--global-color-amber-95);
+    --color-status-warning-fg: var(--global-color-gold-20);
+    --color-status-danger: var(--global-color-crimson-60);
+    --color-status-danger-bg: var(--global-color-crimson-98);
+    --color-status-danger-fg: var(--global-color-crimson-10);
+    --color-status-info: var(--global-color-azure-50);
+    --color-status-info-bg: var(--global-color-azure-95);
+    --color-status-info-fg: var(--global-color-azure-20);
+    /* ---------- Charts ---------- */
+    --color-chart-primary: var(--global-color-emerald-50);
+    --color-chart-secondary: var(--global-color-azure-50);
+    --color-chart-tertiary: var(--global-color-amber-50);
+    --color-chart-danger: var(--global-color-orange-60);
+    --color-chart-neutral: var(--global-color-slate-50);
+    --color-chart-6: var(--global-color-teal-50);
+    --color-chart-7: var(--global-color-rose-50);
+    --color-chart-8: var(--global-color-gold-50);
+    /* ---------- Trends ---------- */
+    --color-trend-positive: var(--global-color-emerald-55);
+    --color-trend-negative: var(--global-color-crimson-50);
+    --color-trend-neutral: var(--global-color-neutral-50);
+    /* ---------- Map / Choropleth ---------- */
+    --color-map-no-data: var(--global-color-neutral-10);
+    --color-map-sequential-low: var(--global-color-azure-95);
+    --color-map-sequential-high: var(--global-color-navy-50);
+    --color-map-diverging-low: var(--global-color-gold-95);
+    --color-map-diverging-mid: var(--global-color-orange-60);
+    --color-map-diverging-high: var(--global-color-crimson-50);
+    
+    /* ---------- Navigation ---------- */
+    --color-nav-section-header: var(--global-color-amber-50);
+    --color-nav-item-rest: var(--color-fg-secondary);
+    --color-nav-item-hover: var(--color-fg-default);
+    --color-nav-item-active: var(--color-fg-default);
+    --color-nav-active-indicator: var(--color-brand-primary);
+    --color-nav-fill-hover: var(--global-color-black-alpha-4);
+    --color-nav-fill-active: var(--global-color-black-alpha-8);
+    --color-sidebar-divider: var(--color-border-subtle);
+    /* ---------- Tables ---------- */
+    --color-table-header-bg: var(--global-color-navy-15);
+    --color-table-header-fg: var(--global-color-white);
+    /* ---------- Typography ---------- */
+    --font-family-base: system-ui, -apple-system, "Segoe UI", "Roboto", "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+    --font-family-mono: "Cascadia Code", "Fira Code", Consolas, monospace;
+    --type-display: 2.5rem;
+    --type-title-1: 2rem;
+    --type-title-2: 1.75rem;
+    --type-title-3: 1.5rem;
+    --type-subtitle-1: 1.25rem;
+    --type-subtitle-2: 1.125rem;
+    --type-body: 0.875rem;
+    --type-caption: 0.75rem;
+    --type-overline: 0.625rem;
+    /* ---------- Spacing ---------- */
+    --space-2xs: 2px;
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 12px;
+    --space-l: 16px;
+    --space-xl: 20px;
+    --space-2xl: 24px;
+    --space-3xl: 32px;
+    --space-4xl: 48px;
+    /* ---------- Elevation ---------- */
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 6%), 0 1px 3px rgb(0 0 0 / 10%);
+    --shadow-raised: 0 2px 4px rgb(0 0 0 / 8%), 0 4px 8px rgb(0 0 0 / 8%);
+    --shadow-overlay: 0 4px 8px rgb(0 0 0 / 12%), 0 8px 16px rgb(0 0 0 / 12%);
+    --shadow-sidebar: 2px 0 8px rgb(0 0 0 / 15%);
+    /* ---------- Radius ---------- */
+    --radius-none: 0;
+    --radius-s: 4px;
+    --radius-m: 8px;
+    --radius-l: 12px;
+    --radius-xl: 16px;
+    --radius-round: 9999px;
+    /* ---------- Border widths ---------- */
+    --border-width-thin: 1px;
+    --border-width-thick: 3px;
+    /* ---------- Layout ---------- */
+    --sidebar-width: 200px;
+    --sidebar-collapsed-width: 48px;
+    --sidebar-icon-hit-size: 44px;
+    --topbar-height: 52px;
+    --panel-width-narrow: calc(var(--sidebar-width) + var(--space-xl) + var(--space-s) + var(--space-s));
+    --panel-width-standard: calc(var(--panel-width-narrow) + var(--space-2xl));
+    --panel-width-wide: calc(var(--panel-width-standard) + var(--space-3xl));
+    --panel-width-extra-wide: calc(var(--panel-width-wide) + var(--space-4xl));
+    --panel-width-dialog: 420px;
+    /* ---------- Data table density ----------
+     Drives row height + cell padding for FluentCustomizableTable / FluentDataTable
+     via the TableRowDensity enum. Header height is independent (--table-row-header). */
+    --table-row-header: 40px;
+    --table-row-compact: 32px;
+    --table-row-standard: 36px;
+    --table-row-comfortable: 64px;
+    --table-cell-padding-header: var(--space-xs);
+    --table-cell-padding-compact: var(--space-2xs);
+    --table-cell-padding-standard: var(--space-xs);
+    --table-cell-padding-comfortable: var(--space-m);
+    /* ---------- dialog ---------- */
+    --dialog-width: 900px;
+    /* ---------- Motion ---------- */
+    --motion-nav-icon-scale-hover: 1.15;
+    --motion-nav-icon-scale-active: 1.05;
+    --motion-nav-icon-duration: 250ms;
+    --motion-nav-icon-easing: cubic-bezier(0.2, 0, 0, 1);
+    --motion-panel-duration: 220ms;
+    --motion-panel-easing: cubic-bezier(0.4, 0, 0.2, 1);
+    /* ---------- Impersonation (golden state) ---------- */
+    --color-impersonation-bg: var(--global-color-amber-95);
+    --color-impersonation-bg-hover: var(--global-color-amber-90);
+    --color-impersonation-border: var(--global-color-amber-60);
+    --color-impersonation-fg: var(--global-color-gold-20);
+    --color-impersonation-icon: var(--global-color-amber-50);
+    /* ---------- Footer ---------- */
+    --footer-logo-filter: brightness(0) saturate(100%) invert(17%) sepia(30%) saturate(700%) hue-rotate(163deg) brightness(95%);
+    /* ---------- Card Headers ---------- */
+    --color-card-header-teal: var(--global-color-teal-50);
+    --color-card-header-navy: var(--global-color-navy-50);
+    --color-card-header-amber: var(--global-color-amber-50);
+    --color-card-header-emerald: var(--global-color-emerald-50);
+    --color-card-header-fg: var(--global-color-white);
+    /* ---------- Focus ---------- */
+    --color-focus-ring: var(--global-color-navy-50);
+}
+
+[data-theme="dark"] {
+    /* ---------- Brand (Dark) ---------- */
+    --color-brand-primary: var(--global-color-navy-80);
+    --color-brand-primary-hover: var(--global-color-navy-90);
+    --color-brand-secondary: var(--global-color-emerald-70);
+    --color-brand-accent: var(--global-color-amber-70);
+    /* ---------- Backgrounds (Dark) ---------- */
+    --color-bg-canvas: var(--global-color-navy-5);
+    --color-bg-surface: var(--global-color-navy-10);
+    --color-bg-surface-secondary: var(--global-color-navy-15);
+    --color-bg-sidebar: var(--global-color-navy-10);
+    --color-bg-sidebar-hover: var(--global-color-navy-15);
+    --color-bg-topbar: var(--global-color-navy-10);
+    --color-bg-banner: var(--global-color-banner-dark);
+    --color-bg-banner-hover: var(--global-color-banner-dark-hover);
+    --color-bg-layer-1: var(--global-color-navy-10);
+    --color-bg-layer-2: var(--global-color-navy-15);
+    --color-bg-layer-3: var(--global-color-navy-20);
+    --color-bg-layer-4: var(--global-color-navy-30);
+    --color-bg-layer-floating: var(--global-color-navy-15);
+    --color-bg-control-rest: var(--global-color-navy-15);
+    --color-bg-control-hover: var(--global-color-navy-20);
+    --color-bg-control-active: var(--global-color-navy-30);
+    --color-bg-control-ghost-rest: transparent;
+    --color-bg-control-ghost-hover: var(--color-bg-control-hover);
+    --color-bg-control-ghost-active: var(--color-bg-control-active);
+    /* ---------- Foregrounds (Dark) ---------- */
+    --color-fg-default: var(--global-color-navy-95);
+    --color-fg-secondary: var(--global-color-navy-90);
+    --color-fg-muted: var(--global-color-navy-80);
+    --color-fg-onbrand: var(--global-color-white);
+    --color-fg-onbrand-secondary: var(--global-color-navy-80);
+    --color-fg-banner: var(--global-color-amber-70);
+    --color-fg-link: var(--global-color-navy-90);
+    --color-fg-link-hover: var(--global-color-navy-95);
+    --color-fg-control-rest: var(--color-fg-default);
+    --color-fg-control-hover: var(--color-fg-default);
+    /* ---------- Borders (Dark) ---------- */
+    --color-border-default: var(--global-color-navy-30);
+    --color-border-strong: var(--global-color-navy-50);
+    --color-border-brand: var(--global-color-navy-70);
+    --color-border-subtle: var(--global-color-navy-20);
+    --color-border-sidebar: var(--global-color-white-alpha-8);
+    /* ---------- Status (Dark) ---------- */
+    --color-status-success: var(--global-color-emerald-65);
+    --color-status-success-bg: var(--global-color-emerald-12);
+    --color-status-success-fg: var(--global-color-emerald-85);
+    --color-status-warning: var(--global-color-amber-60);
+    --color-status-warning-bg: var(--global-color-navy-20);
+    --color-status-warning-fg: var(--global-color-amber-95);
+    --color-status-danger: var(--global-color-crimson-65);
+    --color-status-danger-bg: var(--global-color-crimson-12);
+    --color-status-danger-fg: var(--global-color-crimson-80);
+    --color-status-info: var(--global-color-azure-70);
+    --color-status-info-bg: var(--global-color-azure-15);
+    --color-status-info-fg: var(--global-color-azure-80);
+    /* ---------- Charts (Dark) ---------- */
+    --color-chart-primary: var(--global-color-emerald-70);
+    --color-chart-secondary: var(--global-color-azure-60);
+    --color-chart-tertiary: var(--global-color-amber-60);
+    --color-chart-danger: var(--global-color-orange-70);
+    --color-chart-neutral: var(--global-color-slate-80);
+    /* ---------- Trends (Dark) ---------- */
+    --color-trend-positive: var(--global-color-emerald-65);
+    --color-trend-negative: var(--global-color-crimson-65);
+    --color-trend-neutral: var(--global-color-neutral-60);
+    
+    /* ---------- Map / Choropleth (Dark) ---------- */
+    --color-map-no-data: var(--global-color-navy-20);
+    --color-map-sequential-low: var(--global-color-navy-30);
+    --color-map-sequential-high: var(--global-color-azure-60);
+    --color-map-diverging-low: var(--global-color-amber-60);
+    --color-map-diverging-mid: var(--global-color-orange-70);
+    --color-map-diverging-high: var(--global-color-crimson-65);
+    
+    /* ---------- Navigation (Dark) ---------- */
+    --color-nav-section-header: var(--global-color-amber-60);
+    --color-nav-item-rest: var(--global-color-navy-80);
+    --color-nav-item-hover: var(--global-color-white);
+    --color-nav-item-active: var(--global-color-white);
+    --color-nav-active-indicator: var(--global-color-emerald-60);
+    --color-nav-fill-hover: var(--global-color-white-alpha-6);
+    --color-nav-fill-active: var(--global-color-white-alpha-8);
+    --color-sidebar-divider: var(--global-color-white-alpha-8);
+    /* ---------- Tables (Dark) ---------- */
+    --color-table-header-bg: var(--global-color-navy-10);
+    --color-table-header-fg: var(--global-color-neutral-20);
+    /* ---------- Elevation (Dark) ---------- */
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 20%), 0 1px 3px rgb(0 0 0 / 30%);
+    --shadow-raised: 0 2px 4px rgb(0 0 0 / 25%), 0 4px 8px rgb(0 0 0 / 25%);
+    --shadow-overlay: 0 4px 8px rgb(0 0 0 / 35%), 0 8px 16px rgb(0 0 0 / 35%);
+    --shadow-sidebar: 2px 0 8px rgb(0 0 0 / 40%);
+    /* ---------- Impersonation (Dark) ---------- */
+    --color-impersonation-bg: var(--global-color-banner-dark);
+    --color-impersonation-bg-hover: var(--global-color-banner-dark-hover);
+    --color-impersonation-border: var(--global-color-amber-60);
+    --color-impersonation-fg: var(--global-color-amber-80);
+    --color-impersonation-icon: var(--global-color-amber-60);
+    /* ---------- Footer (Dark) ---------- */
+    --footer-logo-filter: brightness(0) invert(1);
+    /* ---------- Card Headers (Dark) ---------- */
+    --color-card-header-teal: var(--global-color-teal-50);
+    --color-card-header-navy: var(--global-color-navy-70);
+    --color-card-header-amber: var(--global-color-amber-60);
+    --color-card-header-emerald: var(--global-color-emerald-60);
+    --color-card-header-fg: var(--global-color-white);
+    /* ---------- Focus (Dark) ---------- */
+    --color-focus-ring: var(--global-color-azure-60);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --motion-panel-duration: 0ms;
+        --motion-nav-icon-duration: 0ms;
+    }
+}
