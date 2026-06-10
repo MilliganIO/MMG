@@ -1,0 +1,44 @@
+﻿<aside class="panel-shell @WidthVariantClass @(IsOpen ? "open" : "")"
+	   aria-hidden="@(!IsOpen)"
+	   aria-label="@AriaLabel"
+	   @attributes="AdditionalAttributes">
+	<div class="panel-card">
+		@if (ShowHeader)
+		{
+			<div class="panel-header">
+				<div class="panel-title-group">
+					@if (HeaderIcon is not null)
+					{
+						<FluentIcon Value="@HeaderIcon" />
+					}
+					@if (!string.IsNullOrEmpty(Title))
+					{
+						<h3 class="panel-title">@Title</h3>
+					}
+				</div>
+				<div class="panel-header-actions">
+					@HeaderActions
+					@if (ShowCloseButton)
+					{
+						<FluentButton Appearance="ButtonAppearance.Subtle"
+									  aria-label="@($"Close {Title}")"
+									  @onclick="HandleClose">
+							<FluentIcon Value="@(new Icons.Regular.Size20.Dismiss())" />
+						</FluentButton>
+					}
+				</div>
+			</div>
+		}
+
+		<div class="panel-body">
+			@ChildContent
+		</div>
+
+		@if (FooterContent is not null)
+		{
+			<div class="panel-footer">
+				@FooterContent
+			</div>
+		}
+	</div>
+</aside>

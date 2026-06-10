@@ -1,0 +1,156 @@
+﻿/* ============================================================
+   FluentDataTable — scoped layout styles
+   Shared data table wrapper for FluentDataGrid.
+
+   Styling notes:
+   - All values use semantic tokens from tokens.css.
+   - Cell/header text colors are in wwwroot/css/app.css (global)
+     because FluentDataGrid renders <td>/<th> across two component
+     boundaries that Blazor scoped CSS cannot reach.
+   - Dark/light theme switching is automatic via data-theme on
+     the app root (AppShell.razor) and token remapping in tokens.css.
+   ============================================================ */
+
+.fluent-datatable {
+    --fluent-datatable-toolbar-gap: var(--space-s);
+}
+
+/* Body: flex column so grid scrolls, paginator stays pinned */
+.fluent-datatable-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Grid scrolls; paginator stays visible at bottom */
+.fluent-datatable-grid-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+}
+
+.fluent-datatable-paginator {
+    flex-shrink: 0;
+    padding-block-start: var(--space-s);
+}
+
+.fluent-datatable-loading,
+.fluent-datatable-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-m);
+    padding: var(--space-3xl) var(--space-2xl);
+}
+
+/* Layout-only styles for the grid wrapper (color handled globally in app.css) */
+.fluent-datatable-grid {
+    margin-bottom: var(--space-s);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-s);
+    overflow: hidden;
+    background: var(--color-bg-surface);
+}
+
+.fluent-datatable-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 9998;
+}
+
+.fluent-datatable-column-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    min-width: 280px;
+    max-width: 400px;
+    padding: var(--space-m);
+    border-radius: var(--radius-m);
+    box-shadow: var(--shadow-raised);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-subtle);
+}
+
+.fluent-datatable-column-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-s);
+}
+
+.fluent-datatable-column-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.fluent-datatable-column-item {
+    display: flex;
+    align-items: center;
+}
+
+.fluent-datatable-column-panel-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--space-m);
+}
+
+/* Action column — rightmost column for row-level actions */
+.action-column-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    justify-content: flex-start;
+}
+
+/* ─── Table row buttons ───
+   Apply .table-btn to FluentButton or <button> inside grid cells.
+   Compact sizing that fits dense table rows without bloating height.
+   Variants: --ghost (no border), --outline (subtle border). */
+
+::deep .table-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-2xs) var(--space-s);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-s);
+    background: var(--color-bg-surface);
+    font-family: inherit;
+    font-size: var(--type-overline);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--color-fg-default);
+    white-space: nowrap;
+    cursor: pointer;
+    line-height: 1.5;
+    transition: background 120ms ease, border-color 120ms ease;
+}
+
+    ::deep .table-btn:hover {
+        background: var(--color-bg-control-hover);
+        border-color: var(--color-border-strong);
+    }
+
+::deep .table-btn--ghost {
+    border-color: transparent;
+    background: transparent;
+}
+
+    ::deep .table-btn--ghost:hover {
+        background: var(--color-bg-control-hover);
+        border-color: var(--color-border-subtle);
+    }
+
+::deep .table-btn--muted {
+    color: var(--color-fg-muted);
+    border-color: var(--color-border-subtle);
+}

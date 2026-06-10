@@ -1,0 +1,23 @@
+﻿/* PanelActions – reusable Apply / Reset / Undo action bar.
+   Designed for panel footers but usable anywhere. */
+
+.panel-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    width: 100%;
+}
+
+.panel-actions-start {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.panel-actions-end {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-inline-start: auto;
+}

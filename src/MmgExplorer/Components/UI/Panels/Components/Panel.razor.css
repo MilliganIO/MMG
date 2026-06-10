@@ -1,0 +1,130 @@
+﻿/* ============================================================
+   Panel – shared base component for slide-out side panels.
+   Provides shell animation, card container, header, body, footer.
+   Consumers compose <Panel> and inject domain content via slots.
+   ============================================================ */
+
+/* ─── Shell (collapsed by default, animates open) ─── */
+.panel-shell {
+    --panel-shell-width: var(--panel-width-narrow);
+    width: 0;
+    min-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+    pointer-events: none;
+    flex-shrink: 0;
+    visibility: hidden;
+    transition: width var(--motion-panel-duration) var(--motion-panel-easing), min-width var(--motion-panel-duration) var(--motion-panel-easing), opacity var(--motion-panel-duration) var(--motion-panel-easing), padding var(--motion-panel-duration) var(--motion-panel-easing), visibility 0s var(--motion-panel-duration);
+}
+
+    .panel-shell.panel-width-standard {
+        --panel-shell-width: var(--panel-width-standard);
+    }
+
+    .panel-shell.panel-width-wide {
+        --panel-shell-width: var(--panel-width-wide);
+    }
+
+    .panel-shell.panel-width-extra-wide {
+        --panel-shell-width: var(--panel-width-extra-wide);
+    }
+    /* Maximized: dominant takeover, but leaves enough room for the sibling
+   card to act as a Panel-ExtraWide-sized rail (~340px) so it can show a
+   compact context column (Description, Case ID, etc.) plus the View button.
+   The third value in the min() guarantees that minimum rail width on
+   smaller viewports — without it the panel would otherwise eat almost
+   everything when the cap is below 80vw. */
+    .panel-shell.panel-width-maximized {
+        --panel-shell-width: min( 80vw, 1280px, calc(100vw - var(--sidebar-collapsed-width) - var(--panel-width-extra-wide)) );
+    }
+
+    .panel-shell.panel-width-quarter {
+        --panel-shell-width: min(20vw, 1280px, calc(100vw - var(--sidebar-collapsed-width) - var(--panel-width-extra-wide)));
+    }
+
+    .panel-shell.panel-width-half {
+        --panel-shell-width: min(40vw, 1280px, calc(100vw - var(--sidebar-collapsed-width) - var(--panel-width-extra-wide)));
+    }
+
+    .panel-shell.panel-width-threequarters {
+        --panel-shell-width: min(60vw, 1280px, calc(100vw - var(--sidebar-collapsed-width) - var(--panel-width-extra-wide)));
+    }
+
+    .panel-shell.open {
+        width: var(--panel-shell-width);
+        min-width: var(--panel-shell-width);
+        padding: 0 var(--space-s);
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+        transition: width var(--motion-panel-duration) var(--motion-panel-easing), min-width var(--motion-panel-duration) var(--motion-panel-easing), opacity var(--motion-panel-duration) var(--motion-panel-easing), padding var(--motion-panel-duration) var(--motion-panel-easing), visibility 0s 0s;
+    }
+
+/* ─── Card container ─── */
+.panel-card {
+    box-sizing: border-box;
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg-sidebar);
+    color: var(--color-fg-default);
+    border: 1px solid var(--color-border-sidebar);
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+}
+
+/* ─── Header ─── */
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding: var(--space-m) var(--space-l);
+    border-bottom: 1px solid var(--color-sidebar-divider);
+}
+
+.panel-title-group {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.panel-title {
+    margin: 0;
+    font-size: var(--type-subtitle-2);
+    font-weight: 600;
+    color: var(--color-fg-default);
+}
+
+.panel-header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+/* ─── Body (scrollable content area) ─── */
+.panel-body {
+    box-sizing: border-box;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    padding: var(--space-m) var(--space-l);
+}
+
+/* ─── Footer ─── */
+.panel-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-xs);
+    padding: var(--space-m) var(--space-l);
+    border-top: 1px solid var(--color-sidebar-divider);
+}

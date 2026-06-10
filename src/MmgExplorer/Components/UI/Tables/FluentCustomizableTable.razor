@@ -1,0 +1,134 @@
+﻿@using MmgExplorer.Components.UI.Tables.Components
+@using Microsoft.FluentUI.AspNetCore.Components
+@typeparam TItem
+
+<div class="fluent-datatable">
+    <TableToolbar CanExport="ToolbarConfig.CanExport"
+                  CanFilter="ToolbarConfig.CanFilter"
+                  CanSelectColumns="ToolbarConfig.CanChangeColumns"
+                  CanRefresh="ToolbarConfig.CanRefresh"
+                  HasSelectableRows="IsSelectable"
+                  SelectionActionType="@SelectableActionType"
+                  SelectionButtonText="@SelectableButtonText"
+                  OnSelectionClick="@OnSelectableClick"
+                  SelectedCount="@(IsSelectable ? SelectedItems.Count() : 0)"
+                  OnToggleColumns="OnToggleColumns"
+                  OnToggleFilters="OnToggleFilters">
+        <ExtraToolbarContent>
+            @if (HasUserGuide)
+            {
+                if (!string.IsNullOrEmpty(UserGuideHref))
+                {
+                    <FluentLink Id="lnk-User-Guide"
+                                Href="@Assets[UserGuideHref]"
+                                Appearance="LinkAppearance.Default"
+                                IconStart="@(Icon.FromImageUrl("/images/svgs/ico-user-guide.svg"))"
+                                Target="LinkTarget.Blank" />
+
+                }
+                else if (UserGuideContent is not null)
+                {
+                    @UserGuideContent
+                }
+            }
+            @if (ToolbarContent is not null)
+            {
+                @ToolbarContent
+            }
+
+        </ExtraToolbarContent>
+    </TableToolbar>
+    <div class="fluent-datatable-body">
+        @if (IsLoading)
+        {
+            <FluentSpinner Size="SpinnerSize.ExtraLarge"  />
+        }
+        else if (!IsLoading && (Items == null || !Items.Any()))
+        {
+            <FluentIcon Value="@(new Icons.Regular.Size48.ChatEmpty().WithColor("#ff00ff"))" />
+        }
+        else
+        {
+            <div class="fluent-datatable-grid-scroll">
+                <FluentDataGrid @ref="grid"
+                                TItem="TItem"
+                                Items="@Items"
+                                Pagination="@_pagination"
+                                RowSize="@RowDensity"
+                                AutoItemsPerPage="true"
+                                GridTemplateColumns="@GridTemplateColumns"
+                                class="@($"fluent-datatable-grid{(RowHoverHighlight ? " fluent-datatable-grid--row-hover" : string.Empty)}")"
+                                ResizableColumns="false"
+                                HeaderCellAsButtonWithMenu="false"
+                                RowClass="@(item => ReferenceEquals(item, _focusedRow) ? "table-row--focused" : null)">
+                    @if (IsSelectable)
+                    {
+                        <SelectColumn TGridItem="TItem"
+                                      SelectMode="DataGridSelectMode.Multiple"
+                                      SelectFromEntireRow="false"
+                                      Class="@selectionActionCheckboxClass"
+                                      SelectedItems="@SelectedItems"
+                                      SelectedItemsChanged="@SelectedItemsChanged" />
+                    }
+                    @if (ActionContent is not null)
+                    {
+                        <TemplateColumn Title="@ActionColumnText" Sortable="false" Align="DataGridCellAlignment.Start" Class="action-column">
+                            <ChildContent>
+                                <div class="action-column-content" @onclick="@(() => SetFocusedRow(context))">
+                                    @ActionContent(context)
+                                </div>
+                            </ChildContent>
+                        </TemplateColumn>
+                    }
+                    @foreach (var column in VisibleColumns)
+                    {
+                        @if (column.Template != null)
+                        {
+                            var template = column.Template;
+                            <TemplateColumn Title="@column.Title"
+                                            Align="@column.Alignment"
+                                            Class="@column.CssClass"
+                                            Sortable="@column.Sortable"
+                                            SortBy="@column.SortByExpression">
+                                <ChildContent>
+                                    @template(context)
+                                </ChildContent>
+                            </TemplateColumn>
+                        }
+                        else if (column.DisplayFunc != null)
+                        {
+                            var displayFunc = column.DisplayFunc;
+                            <TemplateColumn Title="@column.Title"
+                                            Align="@column.Alignment"
+                                            Class="@column.CssClass"
+                                            Sortable="@column.Sortable"
+                                            SortBy="@column.SortByExpression">
+                                <ChildContent>
+                                    @displayFunc(context)
+                                </ChildContent>
+                            </TemplateColumn>
+                        }
+                    }
+                    @if (HasEndRow)
+                    {
+                        <TemplateColumn Title="@EndRowColumnText" Sortable="false" Align="DataGridCellAlignment.Center" Class="action-column">
+                            <ChildContent>
+                                <div class="action-column-content">
+                                    @if (EndRowContent is not null)
+                                    {
+                                        @EndRowContent(context)
+                                    }
+                                </div>
+                            </ChildContent>
+                        </TemplateColumn>
+                    }
+
+                </FluentDataGrid>
+            </div>
+            <div class="fluent-datatable-paginator">
+                <FluentPaginator State="@_pagination" />
+            </div>
+        }
+    </div>
+</div>
+

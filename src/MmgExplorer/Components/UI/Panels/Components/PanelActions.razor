@@ -1,0 +1,27 @@
+﻿@* Reusable footer action bar for panels (or anywhere Apply/Reset/Undo is needed). *@
+
+<div class="panel-actions">
+	<div class="panel-actions-start">
+		@if (ShowUndo)
+		{
+			<FluentButton Appearance="ButtonAppearance.Subtle"
+						  Disabled="@(!CanUndo)"
+						  aria-label="Undo last change"
+						  @onclick="HandleUndo">
+				<FluentIcon Value="@(new Icons.Regular.Size16.ArrowUndo())" />
+			</FluentButton>
+		}
+	</div>
+	<div class="panel-actions-end">
+		<FluentButton Appearance="ButtonAppearance.Subtle"
+					  Disabled="@(!CanReset)"
+					  @onclick="HandleReset">
+			@ResetLabel
+		</FluentButton>
+		<FluentButton Appearance="ButtonAppearance.Default"
+					  Disabled="@(!CanApply)"
+					  @onclick="HandleApply">
+			@ApplyLabel
+		</FluentButton>
+	</div>
+</div>
