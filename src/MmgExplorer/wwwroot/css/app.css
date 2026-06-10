@@ -905,23 +905,23 @@ fluent-card {
     --accent-stroke-control-active: transparent;
 }
 
-/* Warning-action button: warm emerald palette (filter-icon family) */
+/* Warning-action button: aqua palette */
 .warning-action-btn {
-    --accent-fill-rest: var(--global-color-amber-50);
-    --accent-fill-hover: var(--global-color-amber-95);
-    --accent-fill-active: var(--global-color-amber-5);
-    --accent-fill-focus: var(--global-color-amber-15);
+    --accent-fill-rest: var(--global-color-aqua-50);
+    --accent-fill-hover: var(--global-color-aqua-95);
+    --accent-fill-active: var(--global-color-aqua-5);
+    --accent-fill-focus: var(--global-color-aqua-15);
     --accent-stroke-control-rest: transparent;
     --accent-stroke-control-hover: transparent;
     --accent-stroke-control-active: transparent;
 }
 
-/* Successful-action button: warm emerald palette (filter-icon family) */
+/* Successful-action button: orange palette */
 .success-action-btn {
-    --accent-fill-rest: var(--global-color-emerald-50);
-    --accent-fill-hover: var(--global-color-emerald-95);
-    --accent-fill-active: var(--global-color-emerald-5);
-    --accent-fill-focus: var(--global-color-emerald-15);
+    --accent-fill-rest: var(--global-color-orange-50);
+    --accent-fill-hover: var(--global-color-orange-95);
+    --accent-fill-active: var(--global-color-orange-5);
+    --accent-fill-focus: var(--global-color-orange-15);
     --accent-stroke-control-rest: transparent;
     --accent-stroke-control-hover: transparent;
     --accent-stroke-control-active: transparent;
@@ -938,11 +938,11 @@ fluent-card {
     --accent-stroke-control-active: transparent;
 }
 
-/* Delete-variant checkboxes: override base navy with coral */
+/* Success-variant checkboxes: orange palette (formerly emerald) */
 .success-checkbox {
-    --accent-fill-rest: var(--global-color-emerald-50);
-    --accent-fill-hover: var(--global-color-emerald-95);
-    --accent-fill-active: var(--global-color-emerald-5);
+    --accent-fill-rest: var(--global-color-orange-50);
+    --accent-fill-hover: var(--global-color-orange-95);
+    --accent-fill-active: var(--global-color-orange-5);
 }
 
 /* Delete-variant checkboxes: override base navy with coral */
