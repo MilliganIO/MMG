@@ -1,3 +1,4 @@
+using Microsoft.FluentUI.AspNetCore.Components;
 using MmgExplorer.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+//Added for FluentUI Components to work
+builder.Services.AddFluentUIComponents();
 
 var app = builder.Build();
 

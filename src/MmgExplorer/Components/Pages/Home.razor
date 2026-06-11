@@ -1,7 +1,28 @@
 ﻿@page "/"
+@inject IDialogService DialogService
+@* Apply an "interactive" render mode, or set the render mode globally for all routes *@
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+<FluentStack Orientation="Orientation.Vertical">
+    <FluentButton Appearance="ButtonAppearance.Primary" OnClick="@IncrementCountAsync">
+        Click me
+    </FluentButton>
+    <FluentLabel Margin="@Margin.Vertical4">
+        Current count: @currentCount
+    </FluentLabel>
+</FluentStack>
+
+@code {
+    private int currentCount = 0;
+
+    private async Task IncrementCountAsync()
+    {
+        currentCount++;
+        await DialogService.ShowInfoAsync("Counter Incremented");
+    }
+}
