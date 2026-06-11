@@ -24,19 +24,19 @@ html body {
     border-bottom: 3px solid var(--brand-accent-orange);
 }
 
-.app-header fluent-text {
-    color: var(--colorNeutralForegroundOnBrand);
-    --colorNeutralForeground1: var(--colorNeutralForegroundOnBrand);
-}
+    .app-header fluent-text {
+        color: var(--colorNeutralForegroundOnBrand);
+        --colorNeutralForeground1: var(--colorNeutralForegroundOnBrand);
+    }
 
-.app-header fluent-button#theme-switcher-trigger {
-    --colorNeutralForeground1: var(--colorNeutralForegroundOnBrand);
-    --colorNeutralForeground2: var(--colorNeutralForegroundOnBrand);
-    --colorNeutralForeground2Hover: var(--colorNeutralForegroundOnBrand);
-    --colorNeutralForeground2Pressed: var(--colorNeutralForegroundOnBrand);
-    --colorSubtleBackgroundHover: var(--colorBrandBackgroundHover);
-    --colorSubtleBackgroundPressed: var(--colorBrandBackgroundPressed);
-}
+    .app-header fluent-button#theme-switcher-trigger {
+        --colorNeutralForeground1: var(--colorNeutralForegroundOnBrand);
+        --colorNeutralForeground2: var(--colorNeutralForegroundOnBrand);
+        --colorNeutralForeground2Hover: var(--colorNeutralForegroundOnBrand);
+        --colorNeutralForeground2Pressed: var(--colorNeutralForegroundOnBrand);
+        --colorSubtleBackgroundHover: var(--colorBrandBackgroundHover);
+        --colorSubtleBackgroundPressed: var(--colorBrandBackgroundPressed);
+    }
 
 .app-header-stack {
     padding: 8px 20px;

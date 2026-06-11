@@ -1,9 +1,10 @@
 @* spec: specs/features/theme-switching.md *@
 @inherits LayoutComponentBase
 
-<FluentLayout GlobalScrollbar="true">
-    <FluentLayoutItem Area="LayoutArea.Header" Class="app-header">
+<FluentLayout GlobalScrollbar="false">
+    <FluentLayoutItem Area="LayoutArea.Header" Class="app-header" Sticky="true">
         <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Class="app-header-stack">
+            <FluentLayoutHamburger />
             <FluentText As="TextTag.H1" Size="TextSize.Size500" Weight="TextWeight.Semibold" Nowrap="true">
                 MMG Explorer
             </FluentText>
@@ -11,8 +12,28 @@
             <ThemeSwitcher />
         </FluentStack>
     </FluentLayoutItem>
-    <FluentLayoutItem Area="LayoutArea.Content">
+    <FluentLayoutItem Area="LayoutArea.Navigation" Width="250px">
+        <FluentNav Padding="@Padding.All2" Style="height: 100%;">
+            <FluentNavItem Href="/"
+                           Match="NavLinkMatch.All"
+                           IconRest="@(new Icons.Regular.Size20.Home())"
+                           IconActive="@(new Icons.Filled.Size20.Home())">
+                Home
+            </FluentNavItem>
+            <FluentNavItem Href="/"
+                           IconRest="@(new Icons.Regular.Size20.StyleGuide())"
+                           IconActive="@(new Icons.Filled.Size20.StyleGuide())">
+                Guides
+            </FluentNavItem>
+        </FluentNav>
+    </FluentLayoutItem>
+    <FluentLayoutItem Area="LayoutArea.Content" Padding="@Padding.All2">
         @Body
+    </FluentLayoutItem>
+    <FluentLayoutItem Area="LayoutArea.Footer" Class="app-footer">
+        <FluentText As="TextTag.Paragraph" Size="TextSize.Size200" Weight="TextWeight.Regular" Nowrap="true">
+            &copy; 2024 MMG Explorer. All rights reserved.
+        </FluentText>
     </FluentLayoutItem>
 </FluentLayout>
 
