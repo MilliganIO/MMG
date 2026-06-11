@@ -23,7 +23,7 @@ public record Guide(
     [property: JsonPropertyName("profileIdentifier")] string? ProfileIdentifier,
     [property: JsonPropertyName("blocks")] List<Block> Blocks,
     [property: JsonPropertyName("testScenarios")] List<object>? TestScenarios,
-    [property: JsonPropertyName("testCaseScenarioWorksheetColumns")] List<ColumnDefinition>? TestCaseScenarioWorksheetColumns,
-    [property: JsonPropertyName("columns")] List<ColumnDefinition>? Columns,
+    //[property: JsonPropertyName("testCaseScenarioWorksheetColumns")] List<ColumnDefinition>? TestCaseScenarioWorksheetColumns,
+    //[property: JsonPropertyName("columns")] List<ColumnDefinition>? Columns,
     [property: JsonPropertyName("templates")] List<TemplateSummary>? Templates,
     [property: JsonPropertyName("valueSets")] List<ValueSetEntry>? ValueSets);

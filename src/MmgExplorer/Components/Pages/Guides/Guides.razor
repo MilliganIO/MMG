@@ -1,0 +1,56 @@
+﻿@using MmgExplorer.Components.Pages.Guides.Components
+@page "/guides"
+
+<PageTitle>Guides (all Published)</PageTitle>
+<FluentStack Orientation="Orientation.Horizontal" VerticalGap="16px" HorizontalAlignment="HorizontalAlignment.SpaceBetween" VerticalAlignment="VerticalAlignment.Stretch">
+    <h3 slot="start">Guides</h3>
+    @if (selectedGuide is not null)
+    {
+        <FluentButton Appearance="ButtonAppearance.Subtle" OnClick="HandleBack" Size="ButtonSize.Small">
+            <FluentIcon Value="@(new Icons.Regular.Size12.ArrowLeft())" />
+            BACK
+        </FluentButton>
+    }
+</FluentStack>
+
+@if (loading)
+{
+    <FluentSpinner Size="SpinnerSize.Huge">
+        Loading Guides...
+    </FluentSpinner>
+}
+else if (selectedGuide != null)
+{
+    <GuideDisplay Guide="selectedGuide" />
+}
+else
+{
+    <div class="full-page">
+        <FluentDataGrid @ref="grid"
+                        Items="@records.AsQueryable()"
+                        ResizableColumns=true
+                        ResizeType="DataGridResizeType.Discrete"
+                        GridTemplateColumns="0.3fr 1fr 0.2fr 0.2fr 0.2fr 0.2fr"
+                        Pagination="@pagination"
+                        RowClass="@rowClass"
+                        RowStyle="@rowStyle"
+                        RowSize="DataGridRowSize.Small"
+                        ShowHover="true"
+                        AutoItemsPerPage="true"
+                        HeaderCellAsButtonWithMenu="true">
+            <PropertyColumn Property="@(c => c.Id)" Sortable="true" Align="DataGridCellAlignment.Start" Tooltip="true" TooltipText="@(c => $"Id: {c.Id}")" />
+            <PropertyColumn Property="@(c => c.Name)" Sortable="true" Align="DataGridCellAlignment.Start" Tooltip="true" TooltipText="@(c => $"Name: {c.Name}")" />
+            <PropertyColumn Property="@(c => c.PublishDate)" Sortable="true" Align="DataGridCellAlignment.Start" Tooltip="true" TooltipText="@(c => $"Publish Date: {c.PublishDate}")" />
+            <PropertyColumn Property="@(c => c.PublishVersion)" Sortable="true" Align="DataGridCellAlignment.Start" Tooltip="true" TooltipText="@(c => $"Publish Version: {c.PublishVersion}")" />
+            <PropertyColumn Property="@(c => c.IsActive)" Sortable="true" Align="DataGridCellAlignment.Start" Tooltip="true" TooltipText="@(c => $"Is Active: {c.IsActive}")" />
+            <TemplateColumn Title="Actions">
+                <GuidIdAction Guide="context" OnOpen="@(() => OpenGuide(context.Id))" />
+            </TemplateColumn>
+        </FluentDataGrid>
+        <FluentPaginator State="@pagination" />
+    </div>
+}
+
+@code {
+
+}

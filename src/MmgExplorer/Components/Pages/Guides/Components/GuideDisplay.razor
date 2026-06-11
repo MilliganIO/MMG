@@ -1,0 +1,21 @@
+﻿<h3>Guide (@Guide?.Name)</h3>
+<p>@Guide?.Description</p>
+<FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.SpaceBetween" HorizontalGap="8px" VerticalAlignment="VerticalAlignment.Center" VerticalGap="8px">
+    <FluentCard Appearance="CardAppearance.Filled">
+        <h3>Blocks</h3>
+        <h4>@Guide?.Blocks.Count()</h4>
+    </FluentCard>
+    <FluentCard Appearance="CardAppearance.Filled">
+        <h3>Elements</h3>
+        <h4>@Guide?.Blocks.SelectMany(b => b.Elements).Count()</h4>
+    </FluentCard>
+    <FluentCard Appearance="CardAppearance.Filled">
+        <h3>ValueSets</h3>
+        <h4>@Guide?.ValueSets.Count()</h4>
+    </FluentCard>
+
+</FluentStack>
+
+@code {
+
+}

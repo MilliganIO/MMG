@@ -17,7 +17,7 @@ public class GuideClient : IGuideClient
         apiClient = client;
         logger = logr;
     }
-    public async Task<ApiResponse<Guide>> GetGuideById(Guid id, CancellationToken cancellationToken = default)
+    public async Task<ApiResponse<Guide>> GetGuide(Guid id, CancellationToken cancellationToken = default)
     {
         try
         {

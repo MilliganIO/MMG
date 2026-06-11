@@ -1,0 +1,14 @@
+﻿<FluentButton Id="@($"view-guide-button-{Guide?.Id}")" Appearance="ButtonAppearance.Outline" OnClick="HandleOpen">
+    @if (isLoading)
+    {
+        <FluentSpinner Size="SpinnerSize.ExtraSmall" />
+    }
+    else
+    {
+        <FluentIcon Value="@(new Icons.Regular.Size12.Eye().WithColor("#FC4C02"))" Slot="start" />
+    }
+    View
+</FluentButton>
+<FluentTooltip Anchor="@($"view-guide-button-{Guide?.Id}")" Positioning="Positioning.Above">
+    View details for @Guide?.Name
+</FluentTooltip>

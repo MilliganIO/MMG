@@ -20,6 +20,9 @@
    on body by FluentUI's default-fuib.css; the property inherits into every scroll
    container, shadow DOM included. */
 html body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     background-color: color-mix(in srgb, var(--colorNeutralBackground1) 75%, var(--brand-primary));
     scrollbar-color: var(--brand-accent-orange) transparent;
 }
