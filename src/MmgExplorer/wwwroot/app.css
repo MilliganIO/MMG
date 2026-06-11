@@ -8,6 +8,13 @@
     --brand-accent-teal: #008E97;
 }
 
+/* Subtle brand-tinted page canvas: mixed from the live neutral token so it adapts to
+   light/dark automatically (light: ~3% brand over white => #F7FAFB; dark: imperceptible).
+   Elevated surfaces (cards, menus, dialogs) intentionally keep the untinted neutral. */
+html body {
+    background-color: color-mix(in srgb, var(--colorNeutralBackground1) 75%, var(--brand-primary));
+}
+
 /* App header bar: brand background in both modes. Foreground token remaps are scoped
    to the title and the trigger button only — NOT the whole header subtree, because the
    theme switcher's menu popover is a DOM descendant of the header and would inherit
