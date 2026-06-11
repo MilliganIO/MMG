@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mmg-web",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "src/MmgExplorer", "--no-build", "--urls", "http://localhost:5180"],
+      "port": 5180
+    }
+  ]
+}

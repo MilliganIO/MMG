@@ -1,6 +1,20 @@
-﻿@inherits LayoutComponentBase
+@* spec: specs/features/theme-switching.md *@
+@inherits LayoutComponentBase
 
-@Body
+<FluentLayout GlobalScrollbar="true">
+    <FluentLayoutItem Area="LayoutArea.Header" Class="app-header">
+        <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Class="app-header-stack">
+            <FluentText As="TextTag.H1" Size="TextSize.Size500" Weight="TextWeight.Semibold" Nowrap="true">
+                MMG Explorer
+            </FluentText>
+            <FluentSpacer />
+            <ThemeSwitcher />
+        </FluentStack>
+    </FluentLayoutItem>
+    <FluentLayoutItem Area="LayoutArea.Content">
+        @Body
+    </FluentLayoutItem>
+</FluentLayout>
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.

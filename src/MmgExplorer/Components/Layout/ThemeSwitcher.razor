@@ -1,0 +1,122 @@
+@* spec: specs/features/theme-switching.md *@
+@using System.Text.Json
+@using MmgExplorer.Theming
+@inject IThemeService ThemeService
+@inject IJSRuntime JS
+
+<FluentButton Id="theme-switcher-trigger"
+              Appearance="ButtonAppearance.Transparent"
+              IconStart="@GetModeIcon(_mode)"
+              Title="Change theme"
+              aria-label="Change theme" />
+<FluentMenu Trigger="theme-switcher-trigger">
+    @* Plain menu items (not Role=Radio): the radio role handles clicks inside the web
+       component and they never reach Blazor's OnClick; selection shown via IconEnd. *@
+    <FluentMenuList>
+        <FluentMenuItem IconStart="@(new Icons.Regular.Size20.WeatherSunny())"
+                        IconEnd="@SelectedIndicator(ThemeMode.Light)"
+                        OnClick="@(() => SetModeAsync(ThemeMode.Light))">
+            Light
+        </FluentMenuItem>
+        <FluentMenuItem IconStart="@(new Icons.Regular.Size20.WeatherMoon())"
+                        IconEnd="@SelectedIndicator(ThemeMode.Dark)"
+                        OnClick="@(() => SetModeAsync(ThemeMode.Dark))">
+            Dark
+        </FluentMenuItem>
+        <FluentMenuItem IconStart="@(new Icons.Regular.Size20.Desktop())"
+                        IconEnd="@SelectedIndicator(ThemeMode.System)"
+                        OnClick="@(() => SetModeAsync(ThemeMode.System))">
+            System
+        </FluentMenuItem>
+    </FluentMenuList>
+</FluentMenu>
+
+@code {
+    // FluentUI persists theme settings here and reapplies them before Blazor starts.
+    private const string ThemeStorageKey = "fluentui-blazor:theme-settings";
+
+    private ThemeMode _mode = ThemeMode.System;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        var stored = await ReadStoredSettingsAsync();
+
+        // Apply the company ramp only when it isn't stored yet: re-applying merges
+        // `mode: undefined` into the stored settings and wipes the user's mode choice.
+        if (!BrandTheme.Primary.Equals(stored.Color, StringComparison.OrdinalIgnoreCase))
+        {
+            await ThemeService.SetThemeAsync(BrandTheme.Primary, true);
+            if (stored.Mode is { } mode)
+            {
+                await ThemeService.SetThemeAsync(mode);
+            }
+        }
+
+        if (stored.Mode is { } storedMode && storedMode != _mode)
+        {
+            _mode = storedMode;
+            StateHasChanged();
+        }
+    }
+
+    private async Task SetModeAsync(ThemeMode mode)
+    {
+        _mode = mode;
+        await ThemeService.SetThemeAsync(mode);
+    }
+
+    private async Task<StoredTheme> ReadStoredSettingsAsync()
+    {
+        try
+        {
+            var json = await JS.InvokeAsync<string?>("localStorage.getItem", ThemeStorageKey);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return new StoredTheme(null, null);
+            }
+
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.ValueKind != JsonValueKind.Object)
+            {
+                return new StoredTheme(null, null);
+            }
+
+            string? color = null;
+            if (doc.RootElement.TryGetProperty("color", out var colorProperty))
+            {
+                color = colorProperty.GetString();
+            }
+
+            ThemeMode? mode = null;
+            if (doc.RootElement.TryGetProperty("mode", out var modeProperty) &&
+                Enum.TryParse<ThemeMode>(modeProperty.GetString(), ignoreCase: true, out var parsed))
+            {
+                mode = parsed;
+            }
+
+            return new StoredTheme(color, mode);
+        }
+        catch (JsonException)
+        {
+            // Malformed stored settings — treat as first visit; FluentUI will rewrite the entry.
+            return new StoredTheme(null, null);
+        }
+    }
+
+    private sealed record StoredTheme(string? Color, ThemeMode? Mode);
+
+    private Icon? SelectedIndicator(ThemeMode mode) =>
+        _mode == mode ? new Icons.Regular.Size20.Checkmark() : null;
+
+    private static Icon GetModeIcon(ThemeMode mode) => mode switch
+    {
+        ThemeMode.Light => new Icons.Regular.Size20.WeatherSunny(),
+        ThemeMode.Dark => new Icons.Regular.Size20.WeatherMoon(),
+        _ => new Icons.Regular.Size20.Desktop(),
+    };
+}

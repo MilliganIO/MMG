@@ -198,6 +198,6 @@ Dev automatically updates:
 
 | Feature | Spec | Status |
 |---|---|---|
-| — | — | — |
+| Theme Switching + Company Brand Theme (FEAT-001) | `specs/features/theme-switching.md` | ✅ Done |
 
 > See `specs/_index.md` for full history.

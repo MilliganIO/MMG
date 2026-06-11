@@ -1,3 +1,40 @@
+/* spec: specs/features/theme-switching.md */
+/* Company brand colors — C# counterpart: src/MmgExplorer/Theming/BrandTheme.cs.
+   Prefer FluentUI generated tokens (e.g. var(--colorBrandBackground)) for themed UI;
+   use these only for deliberate fixed-color accents. */
+:root {
+    --brand-primary: #005778;
+    --brand-accent-orange: #FC4C02;
+    --brand-accent-teal: #008E97;
+}
+
+/* App header bar: brand background in both modes. Foreground token remaps are scoped
+   to the title and the trigger button only — NOT the whole header subtree, because the
+   theme switcher's menu popover is a DOM descendant of the header and would inherit
+   white-on-white text in light mode. */
+.app-header {
+    background-color: var(--colorBrandBackground);
+    border-bottom: 3px solid var(--brand-accent-orange);
+}
+
+.app-header fluent-text {
+    color: var(--colorNeutralForegroundOnBrand);
+    --colorNeutralForeground1: var(--colorNeutralForegroundOnBrand);
+}
+
+.app-header fluent-button#theme-switcher-trigger {
+    --colorNeutralForeground1: var(--colorNeutralForegroundOnBrand);
+    --colorNeutralForeground2: var(--colorNeutralForegroundOnBrand);
+    --colorNeutralForeground2Hover: var(--colorNeutralForegroundOnBrand);
+    --colorNeutralForeground2Pressed: var(--colorNeutralForegroundOnBrand);
+    --colorSubtleBackgroundHover: var(--colorBrandBackgroundHover);
+    --colorSubtleBackgroundPressed: var(--colorBrandBackgroundPressed);
+}
+
+.app-header-stack {
+    padding: 8px 20px;
+}
+
 h1:focus {
     outline: none;
 }
