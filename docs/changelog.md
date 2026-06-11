@@ -33,6 +33,8 @@
 
 **Enhancement (2026-06-11):** Brand-blended Navigation sidebar and Footer. Both layout areas get a deeper brand tint than the canvas (`color-mix` 65% neutral / 35% brand, live-token derived so light/dark adapt) plus 2px orange accent edges (nav: right, footer: top) echoing the header underline. Implementation notes: the library's `.fluent-layout-item[area=nav]`/`[area=footer]` background rules required a higher-specificity override; FluentNav's own surfaces are themed via the library's `--nav-bg-color`/`--nav-bg-color-hover` hook variables, set at `:root` because `FluentLayoutHamburger` renders a second copy of the nav in a header drawer outside the `.app-nav` subtree. Verified in light, dark, and the mobile hamburger drawer.
 
+**Enhancement (2026-06-11):** Brand-styled filled cards. `FluentCard Appearance="CardAppearance.Filled"` now gets a subtle brand tint one step lighter than the canvas (`color-mix` 85% neutral / 15% brand, live-token derived) so cards read as raised surfaces in both modes, plus a thin `--brand-accent-orange` border. Selector `html .fluent-card[appearance=filled]` outranks the library rule, which loads after app.css at equal specificity.
+
 **Tests:** none — no test projects exist yet; verified manually in the running app (mode switching, persistence across reload, System following OS preference).
 
 **Spec:** `specs/features/theme-switching.md`
