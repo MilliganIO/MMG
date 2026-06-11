@@ -1,2 +1,24 @@
-﻿body {
+/* Clamp the description (the only variable-height element) so the stat cards stay
+   visible without scrolling the content area; "Show more" expands it on demand.
+   ::deep is required because FluentText renders inside a child component, so its
+   elements don't carry this component's CSS scope attribute. The <fluent-text>
+   element holds the text directly (no inner <p>), so it is the clamp target. */
+/* FluentGrid's Spacing uses negative-margin gutters (width: 100% + 24px at
+   Spacing=3) that bleed past the container — clip the transparent overhang so the
+   content area doesn't grow a horizontal scrollbar. */
+.guide-display {
+    overflow-x: clip;
+}
+
+.guide-display ::deep fluent-text.guide-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+}
+
+.guide-display ::deep fluent-text.guide-description.expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
 }

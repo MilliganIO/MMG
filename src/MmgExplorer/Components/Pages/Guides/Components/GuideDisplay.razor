@@ -1,25 +1,65 @@
-﻿<h3>Guide (@Guide?.Name)</h3>
-<p>@Guide?.Description</p>
-<FluentGrid Spacing="3" AdaptiveRendering="true">
-    <FluentGridItem Xs="12" Sm="6" Md="4">
-        <FluentCard Appearance="CardAppearance.Filled">
-            <h3>Blocks</h3>
-            <h4>@Guide?.Blocks.Count()</h4>
-        </FluentCard>
-    </FluentGridItem>
-    <FluentGridItem Xs="12" Sm="6" Md="4">
-        <FluentCard Appearance="CardAppearance.Filled">
-            <h3>Elements</h3>
-            <h4>@Guide?.Blocks.SelectMany(b => b.Elements).Count()</h4>
-        </FluentCard>
-    </FluentGridItem>
-    <FluentGridItem Xs="12" Sm="6" Md="4">
-        <FluentCard Appearance="CardAppearance.Filled">
-            <h3>ValueSets</h3>
-            <h4>@Guide?.ValueSets?.Count()</h4>
-        </FluentCard>
-    </FluentGridItem>
-</FluentGrid>
+<div class="guide-display">
+    <FluentGrid Spacing="3" AdaptiveRendering="true">
+        <FluentGridItem Xs="12" Sm="12" Md="12">
+            <FluentText As="TextTag.H1" Block="true" Align="TextAlign.Start">
+                Guide (@Guide?.Name)
+            </FluentText>
+            <FluentText As="TextTag.Paragraph" Block="true" Align="TextAlign.Justify" Color="Color.Disabled"
+                        Class="@(descriptionExpanded ? "guide-description expanded" : "guide-description")">
+                @Guide?.Description
+            </FluentText>
+            @if (Guide?.Description?.Length > 240)
+            {
+                <FluentButton Appearance="ButtonAppearance.Transparent" Size="ButtonSize.Small" OnClick="ToggleDescription">
+                    @(descriptionExpanded ? "Show less" : "Show more")
+                </FluentButton>
+            }
+        </FluentGridItem>
+        <FluentGridItem Xs="12" Sm="6" Md="4">
+            <FluentCard Appearance="CardAppearance.Filled" Height="100%" Shadow="CardShadow.Large">
+                <FluentStack Orientation="Orientation.Horizontal" VerticalGap="8px" Width="100%" HorizontalAlignment="HorizontalAlignment.SpaceBetween">
+                    <h3>Blocks</h3>
+                    <h4>@Guide?.Blocks.Count()</h4>
+                </FluentStack>
+            </FluentCard>
+        </FluentGridItem>
+        <FluentGridItem Xs="12" Sm="6" Md="4">
+            <FluentCard Appearance="CardAppearance.Filled" Height="100%" Shadow="CardShadow.Large">
+                <FluentStack Orientation="Orientation.Horizontal" VerticalGap="8px" Width="100%" HorizontalAlignment="HorizontalAlignment.SpaceBetween">
+                    <h3>Elements</h3>
+                    <h4>@Guide?.Blocks.SelectMany(b => b.Elements).Count()</h4>
+                </FluentStack>
+            </FluentCard>
+        </FluentGridItem>
+        <FluentGridItem Xs="12" Sm="6" Md="4">
+            <FluentCard Appearance="CardAppearance.Default" Height="100%" Shadow="CardShadow.Large">
+                <FluentStack Orientation="Orientation.Horizontal" VerticalGap="8px" Width="100%" HorizontalAlignment="HorizontalAlignment.SpaceBetween">
+                    <h3>ValueSets</h3>
+                    <h4 style="color: var(--brand-accent-orange);">@Guide?.ValueSets?.Count()</h4>
+                </FluentStack>
+            </FluentCard>
+        </FluentGridItem>
+        <FluentGridItem Xs="12" Sm="12" Md="12">
+            <FluentAccordion Block="true" HeadingLevel="1" ExpandMode="AccordionExpandMode.Single" Size="AccordionItemSize.ExtraLarge">
+                @foreach (var block in Guide?.Blocks)
+                {
+                    <FluentAccordionItem Block="true"
+                                         Header="@($"{block.Name}")"
+                                         HeaderTooltip="@($"Block for {block.Id}")"
+                                         Size="AccordionItemSize.Large"
+                                         HeadingLevel="2"
+                                         Id="@($"acc-block-{block.Id}")"
+                                         MarkerPosition="AccordionItemMarkerPosition.End">
+                        <FluentText As="TextTag.Paragraph" Block="true" Align="TextAlign.Justify">
+                            @block.StartingDescription
+                        </FluentText>
+
+                    </FluentAccordionItem>
+                }
+            </FluentAccordion>
+        </FluentGridItem>
+    </FluentGrid>
+</div>
 
 @code {
 

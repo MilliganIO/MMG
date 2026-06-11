@@ -55,6 +55,10 @@ html .fluent-card[appearance=filled] {
     border: var(--strokeWidthThin) solid var(--brand-accent-orange);
 }
 
+html .fluent-menu {
+    background-color: color-mix(in srgb, var(--colorNeutralBackground1) 85%, var(--brand-primary));
+    border: var(--strokeWidthThin) solid var(--brand-accent-orange);
+}
 /* App header bar: brand background in both modes. Foreground token remaps are scoped
    to the title and the trigger button only — NOT the whole header subtree, because the
    theme switcher's menu popover is a DOM descendant of the header and would inherit
