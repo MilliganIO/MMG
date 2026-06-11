@@ -1,5 +1,7 @@
 using Microsoft.FluentUI.AspNetCore.Components;
 using MmgExplorer.Components;
+using MmgExplorer.Services;
+using MmgExplorer.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,18 @@ builder.Services.AddRazorComponents()
 
 //Added for FluentUI Components to work
 builder.Services.AddFluentUIComponents();
+
+
+// HTTP client for API communication
+var apiBaseUrl = builder.Configuration["ApiBaseUrl"]
+    ?? throw new InvalidOperationException("ApiBaseUrl configuration is missing.");
+
+builder.Services.AddHttpClient<IApiClient, ApiClient>("MmgatApi",
+    client =>
+    {
+        client.BaseAddress = new Uri(apiBaseUrl);
+    });
+builder.Services.AddScoped<IGuideClient, GuideClient>();
 
 var app = builder.Build();
 
