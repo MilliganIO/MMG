@@ -6,13 +6,41 @@
     --brand-primary: #005778;
     --brand-accent-orange: #FC4C02;
     --brand-accent-teal: #008E97;
+    /* FluentNav background hooks (library fallback: colorNeutralBackground4).
+       Defined at :root so both nav renderings get them — the sidebar inside
+       .app-nav AND the copy FluentLayoutHamburger renders in a header drawer. */
+    --nav-bg-color: color-mix(in srgb, var(--colorNeutralBackground1) 65%, var(--brand-primary));
+    --nav-bg-color-hover: color-mix(in srgb, var(--colorNeutralBackground1) 55%, var(--brand-primary));
 }
 
-/* Subtle brand-tinted page canvas: mixed from the live neutral token so it adapts to
-   light/dark automatically (light: ~3% brand over white => #F7FAFB; dark: imperceptible).
-   Elevated surfaces (cards, menus, dialogs) intentionally keep the untinted neutral. */
+/* Brand-tinted page canvas: mixed from the live neutral token so it adapts to
+   light/dark automatically (the neutral percentage controls the tint strength).
+   Elevated surfaces (cards, menus, dialogs) intentionally keep the untinted neutral.
+   Scrollbars: brand-orange thumb everywhere — overrides the grey scrollbar-color set
+   on body by FluentUI's default-fuib.css; the property inherits into every scroll
+   container, shadow DOM included. */
 html body {
     background-color: color-mix(in srgb, var(--colorNeutralBackground1) 75%, var(--brand-primary));
+    scrollbar-color: var(--brand-accent-orange) transparent;
+}
+
+/* Nav sidebar + footer: one step deeper brand tint than the canvas (65% neutral
+   vs the canvas's 75%), derived from the live neutral token so both modes adapt.
+   Orange accent edges echo the header underline. */
+/* [area] bumps specificity above the library's .fluent-layout-item[area=nav]
+   and [area=footer] background rules, which load after this sheet. */
+.fluent-layout-item.app-nav[area],
+.fluent-layout-item.app-footer[area] {
+    background-color: color-mix(in srgb, var(--colorNeutralBackground1) 65%, var(--brand-primary));
+}
+
+.app-nav {
+    border-right: 2px solid var(--brand-accent-orange);
+}
+
+.app-footer {
+    border-top: 2px solid var(--brand-accent-orange);
+    padding: 6px 20px;
 }
 
 /* App header bar: brand background in both modes. Foreground token remaps are scoped

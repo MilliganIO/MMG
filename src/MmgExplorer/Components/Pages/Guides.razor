@@ -2,7 +2,7 @@
 
 <PageTitle>Guides (all Published)</PageTitle>
 <h3>Guides</h3>
-@if(loading)
+@if (loading)
 {
     <FluentSpinner Size="SpinnerSize.Huge">
         Loading Guides...
@@ -22,6 +22,7 @@ else
                     HeaderCellAsButtonWithMenu="true">
         <PropertyColumn Property="@(c => c.Id)" Sortable="true" Align="DataGridCellAlignment.Start" Tooltip="true" TooltipText="@(c => $"Id: {c.Id}")" />
         <PropertyColumn Property="@(c => c.Name)" Sortable="true" Align="DataGridCellAlignment.Start" Tooltip="true" TooltipText="@(c => $"Name: {c.Name}")" />
+
     </FluentDataGrid>
     <FluentPaginator State="@pagination" />
 }

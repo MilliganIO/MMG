@@ -31,6 +31,8 @@
 
 **Enhancement (2026-06-11):** Subtle brand-tinted page canvas. `html body` background is `color-mix(in srgb, var(--colorNeutralBackground1) 97%, var(--brand-primary))` — ~3% brand blue over the live neutral token, giving `#F7FAFB` in light mode and an imperceptible shift in dark mode. Derived from the live token (rather than a static light-mode override) because the library does not set `color-scheme`, so CSS cannot otherwise distinguish the effective mode without extra JS. Elevated surfaces (menus, cards, dialogs) intentionally keep the untinted neutral.
 
+**Enhancement (2026-06-11):** Brand-blended Navigation sidebar and Footer. Both layout areas get a deeper brand tint than the canvas (`color-mix` 65% neutral / 35% brand, live-token derived so light/dark adapt) plus 2px orange accent edges (nav: right, footer: top) echoing the header underline. Implementation notes: the library's `.fluent-layout-item[area=nav]`/`[area=footer]` background rules required a higher-specificity override; FluentNav's own surfaces are themed via the library's `--nav-bg-color`/`--nav-bg-color-hover` hook variables, set at `:root` because `FluentLayoutHamburger` renders a second copy of the nav in a header drawer outside the `.app-nav` subtree. Verified in light, dark, and the mobile hamburger drawer.
+
 **Tests:** none — no test projects exist yet; verified manually in the running app (mode switching, persistence across reload, System following OS preference).
 
 **Spec:** `specs/features/theme-switching.md`
