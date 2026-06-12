@@ -35,6 +35,8 @@
 
 **Enhancement (2026-06-11):** Brand-styled filled cards. `FluentCard Appearance="CardAppearance.Filled"` now gets a subtle brand tint one step lighter than the canvas (`color-mix` 85% neutral / 15% brand, live-token derived) so cards read as raised surfaces in both modes, plus a thin `--brand-accent-orange` border. Selector `html .fluent-card[appearance=filled]` outranks the library rule, which loads after app.css at equal specificity.
 
+**Enhancement (2026-06-12):** Global brand tint via design-token remap. Instead of per-component background tweaks, app.css now remaps the whole neutral-background token family once at `html:root` (NB2–NB6 + Hover/Pressed variants, `NeutralBackgroundDisabled`, `SubtleBackgroundHover/Pressed`) to `color-mix` derivations of the live `--colorNeutralBackground1` + `--brand-primary`. Every FluentUI component — including future ones and shadow-DOM internals — picks up the brand hint automatically in both modes; no further per-element styling is needed. `NeutralBackground1` is deliberately not remapped (self-reference would be a CSS custom-property cycle; it stays the pure elevated-surface base), and foreground/stroke tokens are untouched for contrast safety. The now-redundant filled-card background and DataGrid header-hover rules were removed (verified pixel-identical values from the new source); orange accent borders and the custom header/nav/footer/canvas zone depths remain as deliberate per-zone CSS.
+
 **Tests:** none — no test projects exist yet; verified manually in the running app (mode switching, persistence across reload, System following OS preference).
 
 **Spec:** `specs/features/theme-switching.md`

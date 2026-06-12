@@ -13,6 +13,31 @@
     --nav-bg-color-hover: color-mix(in srgb, var(--colorNeutralBackground1) 55%, var(--brand-primary));
 }
 
+/* Global brand tint: remap the neutral-background token family once so every
+   FluentUI component (incl. shadow DOM) carries the brand hint in both modes —
+   no per-component background tweaks needed. All values derive from the live
+   --colorNeutralBackground1, which is never remapped (self-reference would be a
+   CSS custom-property cycle; it stays the pure elevated-surface base).
+   html:root outranks the theme engine's adopted `html { … }` token sheet. */
+html:root {
+    --colorNeutralBackground2: color-mix(in srgb, var(--colorNeutralBackground1) 85%, var(--brand-primary));
+    --colorNeutralBackground2Hover: color-mix(in srgb, var(--colorNeutralBackground1) 78%, var(--brand-primary));
+    --colorNeutralBackground2Pressed: color-mix(in srgb, var(--colorNeutralBackground1) 72%, var(--brand-primary));
+    --colorNeutralBackground3: color-mix(in srgb, var(--colorNeutralBackground1) 80%, var(--brand-primary));
+    --colorNeutralBackground3Hover: color-mix(in srgb, var(--colorNeutralBackground1) 73%, var(--brand-primary));
+    --colorNeutralBackground3Pressed: color-mix(in srgb, var(--colorNeutralBackground1) 67%, var(--brand-primary));
+    --colorNeutralBackground4: color-mix(in srgb, var(--colorNeutralBackground1) 70%, var(--brand-primary));
+    --colorNeutralBackground4Hover: color-mix(in srgb, var(--colorNeutralBackground1) 63%, var(--brand-primary));
+    --colorNeutralBackground4Pressed: color-mix(in srgb, var(--colorNeutralBackground1) 57%, var(--brand-primary));
+    --colorNeutralBackground5: color-mix(in srgb, var(--colorNeutralBackground1) 65%, var(--brand-primary));
+    --colorNeutralBackground6: color-mix(in srgb, var(--colorNeutralBackground1) 60%, var(--brand-primary));
+    --colorNeutralBackgroundDisabled: color-mix(in srgb, var(--colorNeutralBackground1) 80%, var(--brand-primary));
+    --colorNeutralBackground1Hover: color-mix(in srgb, var(--colorNeutralBackground1) 90%, var(--brand-primary));
+    --colorNeutralBackground1Pressed: color-mix(in srgb, var(--colorNeutralBackground1) 84%, var(--brand-primary));
+    --colorSubtleBackgroundHover: color-mix(in srgb, var(--colorNeutralBackground1) 85%, var(--brand-primary));
+    --colorSubtleBackgroundPressed: color-mix(in srgb, var(--colorNeutralBackground1) 75%, var(--brand-primary));
+}
+
 /* Brand-tinted page canvas: mixed from the live neutral token so it adapts to
    light/dark automatically (the neutral percentage controls the tint strength).
    Elevated surfaces (cards, menus, dialogs) intentionally keep the untinted neutral.
@@ -46,23 +71,10 @@ html body {
     padding: 6px 20px;
 }
 
-/* Filled cards: subtle brand tint, one step LIGHTER than the canvas (85% vs 75%
-   neutral) so cards read as raised surfaces, with a brand-orange border. The html
-   prefix outranks the library's .fluent-card[appearance=filled] rule, which loads
-   after this sheet at equal specificity. */
+/* Filled cards: brand-orange border. The background tint now comes from the
+   global NeutralBackground2 remap above (filled cards consume that token). */
 html .fluent-card[appearance=filled] {
-    background-color: color-mix(in srgb, var(--colorNeutralBackground1) 85%, var(--brand-primary));
     border: var(--strokeWidthThin) solid var(--brand-accent-orange);
-}
-
-/* DataGrid header cells (all grids app-wide): hover/press in the subtle brand tint
-   instead of grey. The header sort buttons are appearance=subtle fluent-buttons whose
-   shadow-DOM hover rule reads --colorSubtleBackgroundHover, so remapping the token is
-   enough (custom properties inherit into shadow trees). 85% matches the filled-card
-   tint; pressed goes one step deeper. */
-.fluent-data-grid .column-header {
-    --colorSubtleBackgroundHover: color-mix(in srgb, var(--colorNeutralBackground1) 85%, var(--brand-primary));
-    --colorSubtleBackgroundPressed: color-mix(in srgb, var(--colorNeutralBackground1) 75%, var(--brand-primary));
 }
 
 html .fluent-menu {
