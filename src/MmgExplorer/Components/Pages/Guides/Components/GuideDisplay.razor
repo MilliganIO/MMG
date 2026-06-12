@@ -1,5 +1,5 @@
 <div class="guide-display">
-    <FluentGrid Spacing="3" AdaptiveRendering="true">
+    <FluentGrid Justify="JustifyContent.SpaceEvenly" Spacing="3" AdaptiveRendering="true">
         <FluentGridItem Xs="12" Sm="12" Md="12">
             <FluentText As="TextTag.H1" Block="true" Align="TextAlign.Start">
                 Guide (@Guide?.Name)
@@ -40,20 +40,52 @@
             </FluentCard>
         </FluentGridItem>
         <FluentGridItem Xs="12" Sm="12" Md="12">
-            <FluentAccordion Block="true" HeadingLevel="1" ExpandMode="AccordionExpandMode.Single" Size="AccordionItemSize.ExtraLarge">
+            <FluentAccordion Block="true"
+                             HeadingLevel="1"
+                             ExpandMode="AccordionExpandMode.Single"
+                             Size="AccordionItemSize.Medium"
+                             ActiveId="@activeId"
+                             OnAccordionItemChange="HandleOnAccordionItemChange">
                 @foreach (var block in Guide?.Blocks)
                 {
                     <FluentAccordionItem Block="true"
-                                         Header="@($"{block.Name}")"
-                                         HeaderTooltip="@($"Block for {block.Id}")"
-                                         Size="AccordionItemSize.Large"
+                                         Header="@($"{block.Name} Elements: {block.Elements.Count()}")"
+                                         Size="AccordionItemSize.Medium"
                                          HeadingLevel="2"
-                                         Id="@($"acc-block-{block.Id}")"
+                                         Id="@($"{block.Id}")"
                                          MarkerPosition="AccordionItemMarkerPosition.End">
                         <FluentText As="TextTag.Paragraph" Block="true" Align="TextAlign.Justify">
                             @block.StartingDescription
-                        </FluentText>
+                            <FluentBadge Color="BadgeColor.Brand">Expanded: @block.Expanded</FluentBadge>
+                            <FluentBadge Color="BadgeColor.Danger">Ordinal @block.Ordinal</FluentBadge>
+                            <FluentBadge Color="BadgeColor.Important">Short Name: @block.ShortName</FluentBadge>
+                            <FluentBadge Color="BadgeColor.Informative">Should Display Name: @block.ShouldDisplayName</FluentBadge>
+                            <FluentBadge Color="BadgeColor.Severe">Template: @block.Template</FluentBadge>
+                            <FluentBadge Color="BadgeColor.Subtle">Subtle</FluentBadge>
+                            <FluentBadge Color="BadgeColor.Success">Success</FluentBadge>
+                            <FluentBadge Color="BadgeColor.Warning">Warning</FluentBadge>
 
+                        </FluentText>
+                        <FluentGrid Justify="JustifyContent.SpaceEvenly" Spacing="3" AdaptiveRendering="true">
+                            @foreach (var element in block.Elements)
+                            {
+                                <FluentGridItem Xs="12" Sm="6" Md="4">
+                                    <FluentCard Appearance="CardAppearance.Outline" Height="100%" Shadow="CardShadow.Medium">
+                                        <FluentStack Orientation="Orientation.Vertical" VerticalGap="8px" Padding="16px">
+                                            <h4>@element.Name</h4>
+                                            <p>@element.Description</p>
+                                            @if (element.ValueSetCode != null)
+                                            {
+                                                <FluentBadge Color="BadgeColor.Brand">@($"ValueSet: {element.ValueSetCode}")</FluentBadge>
+                                            }
+                                        </FluentStack>
+                                    </FluentCard>
+                                </FluentGridItem>
+                            }
+                        </FluentGrid>
+                        <FluentText As="TextTag.Paragraph" Block="true" Align="TextAlign.Justify">
+                            @block.EndingDescription
+                        </FluentText>
                     </FluentAccordionItem>
                 }
             </FluentAccordion>

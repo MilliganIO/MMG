@@ -2,11 +2,11 @@
 @page "/guides"
 
 <PageTitle>Guides (all Published)</PageTitle>
-<FluentStack Orientation="Orientation.Horizontal" VerticalGap="16px" HorizontalAlignment="HorizontalAlignment.SpaceBetween" VerticalAlignment="VerticalAlignment.Stretch">
-    <h3 slot="start">Guides</h3>
+<FluentStack Orientation="Orientation.Horizontal" VerticalGap="8px" HorizontalAlignment="HorizontalAlignment.SpaceBetween" VerticalAlignment="VerticalAlignment.Stretch" >
+    <h5 slot="start">Guides</h5>
     @if (selectedGuide is not null)
     {
-        <FluentButton Appearance="ButtonAppearance.Subtle" OnClick="HandleBack" Size="ButtonSize.Small">
+        <FluentButton Appearance="ButtonAppearance.Outline" OnClick="HandleBack" Size="ButtonSize.Small">
             <FluentIcon Value="@(new Icons.Regular.Size12.ArrowLeft())" />
             BACK
         </FluentButton>
