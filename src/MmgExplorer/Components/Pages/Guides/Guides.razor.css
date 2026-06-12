@@ -2,3 +2,13 @@
     height: calc(80vh);
     min-height: 8rem;
 }
+
+/* DataGrid header cells: hover/press in the subtle brand tint instead of grey.
+   The header sort buttons are appearance=subtle fluent-buttons whose shadow-DOM
+   hover rule reads --colorSubtleBackgroundHover, so remapping the token here is
+   enough (custom properties inherit into shadow trees). 85% matches the filled-
+   card tint; pressed goes one step deeper. */
+.full-page ::deep .fluent-data-grid .column-header {
+    --colorSubtleBackgroundHover: color-mix(in srgb, var(--colorNeutralBackground1) 85%, var(--brand-primary));
+    --colorSubtleBackgroundPressed: color-mix(in srgb, var(--colorNeutralBackground1) 75%, var(--brand-primary));
+}
