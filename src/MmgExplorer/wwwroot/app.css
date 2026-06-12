@@ -11,6 +11,10 @@
        .app-nav AND the copy FluentLayoutHamburger renders in a header drawer. */
     --nav-bg-color: color-mix(in srgb, var(--colorNeutralBackground1) 65%, var(--brand-primary));
     --nav-bg-color-hover: color-mix(in srgb, var(--colorNeutralBackground1) 55%, var(--brand-primary));
+    /* DataGrid row-hover hook (library fallback: colorNeutralStroke2 grey):
+       subtle tint built from the orange accent so hovered rows stand out from
+       the blue-tinted surfaces. */
+    --datagrid-hover-color: color-mix(in srgb, var(--colorNeutralBackground1) 85%, var(--brand-accent-orange));
 }
 
 /* Global brand tint: remap the neutral-background token family once so every
