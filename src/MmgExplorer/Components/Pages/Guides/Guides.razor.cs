@@ -15,8 +15,8 @@ public partial class Guides
     string errorMessage = string.Empty;
     private Guide? selectedGuide;
     PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
-    Func<Guide, string?> rowClass = x => x.Name.StartsWith("A") ? "highlighted" : null;
-    Func<Guide, string?> rowStyle = x => x.Name.StartsWith("Generic") ? "background-color: var(--brand-accent-orange)" : null;
+    Func<Guide, string?> rowClass = x => (!string.IsNullOrEmpty(x.Name) && x.Name.StartsWith("A")) ? "highlighted" : null;
+    Func<Guide, string?> rowStyle = x => (!string.IsNullOrEmpty(x.Name) && x.Name.StartsWith("Generic")) ? "background-color: var(--brand-accent-orange)" : null;
 
     protected override async Task OnInitializedAsync()
     {

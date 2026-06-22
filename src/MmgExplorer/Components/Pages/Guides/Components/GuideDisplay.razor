@@ -72,12 +72,37 @@
                                 <FluentGridItem Xs="12" Sm="6" Md="4">
                                     <FluentCard Appearance="CardAppearance.Outline" Height="100%" Shadow="CardShadow.Medium">
                                         <FluentStack Orientation="Orientation.Vertical" VerticalGap="8px" Padding="16px">
-                                            <h4>@element.Name</h4>
+                                            <h4>
+                                                @element.Name
+                                                @if(element.Priority == "R")
+                                                {
+                                                    <FluentBadge Color="BadgeColor.Danger">Priority: Required</FluentBadge>
+                                                }
+                                                else
+                                                {
+                                                    <FluentBadge Color="BadgeColor.Brand">Priority: @element.Priority</FluentBadge>
+                                                }
+                                            </h4>
                                             <p>@element.Description</p>
                                             @if (element.ValueSetCode != null)
                                             {
                                                 <FluentBadge Color="BadgeColor.Brand">@($"ValueSet: {element.ValueSetCode}")</FluentBadge>
                                             }
+                                            @if(!string.IsNullOrEmpty(element.BusinessRules))
+                                            {
+                                                <FluentText As="TextTag.Paragraph" Block="true" Align="TextAlign.Justify">
+                                                    <strong>Business Rules: </strong>@element.BusinessRules
+                                                </FluentText>
+                                            }
+                                            <FluentText As="TextTag.Paragraph" Block="true" Align="TextAlign.Justify">
+                                                <FluentBadge Color="BadgeColor.Brand">DataType: @element.DataType</FluentBadge>
+                                                <FluentBadge Color="BadgeColor.Brand">CodeSystem: @element.CodeSystem</FluentBadge>
+                                                <FluentBadge Color="BadgeColor.Brand">DefaultValue: @element.DefaultValue</FluentBadge>
+                                                <FluentBadge Color="BadgeColor.Brand">RelatedElementId: @element.RelatedElementId</FluentBadge>
+                                            </FluentText>
+                                            <FluentText As="TextTag.Paragraph" Block="true" Align="TextAlign.Justify">
+                                                <strong>Csv Implementation: </strong>@element.CsvImplementationNote
+                                            </FluentText>
                                         </FluentStack>
                                     </FluentCard>
                                 </FluentGridItem>

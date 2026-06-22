@@ -10,6 +10,7 @@ public class GuideClient : IGuideClient
     private readonly ILogger<GuideClient> logger;
     // Relative to HttpClient.BaseAddress: no leading slash (a rooted path would
     // discard the base path), and the base address must end with a trailing slash.
+    // https://apidev.cdc.gov/mmgat/1.0.0/api/guide/all
     private readonly string urlPrefix = "guide/";
 
     public GuideClient(IApiClient client, ILogger<GuideClient> logr)
@@ -44,7 +45,8 @@ public class GuideClient : IGuideClient
     {
         try
         {
-            var url = $"{urlPrefix}allpublished";
+            //var url = $"{urlPrefix}allpublished";
+            var url = $"{urlPrefix}all";
             var response = await apiClient.GetAsync(url);
             if ((!response.IsSuccessStatusCode))
             {
